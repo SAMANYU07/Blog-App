@@ -54,7 +54,7 @@ export default function LoginPage() {
   }
   if (loading) {
     // console.log("Loading...");
-    return <LoadingScreen/>
+    // return <LoadingScreen/>
   }
 
   return (

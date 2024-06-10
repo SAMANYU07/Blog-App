@@ -18,8 +18,8 @@ export default function Home() {
       dispatch(toggleLoading(false));
     }
   }, [userLoggedIn])
-  if (loading)
-    return <LoadingScreen/>
+  // if (loading)
+    // return <LoadingScreen/>
   if (!userLoggedIn)
     return <LoginPage/>
   // latestPosts?.map(blog => console.log(blog));
