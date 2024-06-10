@@ -1,6 +1,6 @@
 import React, { useState, useRef, useMemo, useEffect } from 'react'
 import JoditEditor from "jodit-react";
-import FroalaEditor from 'froala-editor';
+// import { FroalaEditor } from 'froala-editor';
 import Button from './Button';
 import blogService from '../appwrite/PostConfig';
 import { useSelector } from 'react-redux';
