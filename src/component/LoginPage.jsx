@@ -39,7 +39,7 @@ export default function LoginPage() {
   }
   const listSessions = () => {
     const p = authService.activeUserSession();
-    console.log(p);
+    // console.log(p);
     // authService.activeUserSession();
   }
   const handleLogout = () => {
@@ -50,10 +50,10 @@ export default function LoginPage() {
     dispatch(isloggedin());
   }
   const displayuser = () => {
-    console.log(authService.activeUserSession());
+    // console.log(authService.activeUserSession());
   }
   if (loading) {
-    console.log("Loading...");
+    // console.log("Loading...");
     return <LoadingScreen/>
   }
 

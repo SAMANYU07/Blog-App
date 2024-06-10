@@ -24,8 +24,8 @@ export default function BlogPage() {
   }, [])
   // console.log(blog.content);
   const handleEdit = () => {
-    console.log("Edit...");
-    console.log("BlogPage Sending: ", blog?.fImage);
+    // console.log("Edit...");
+    // console.log("BlogPage Sending: ", blog?.fImage);
     // return <NewBlog pContent={content} pTitle={blog?.title} pFimage={blog?.fImage}/>
     const serializedState = JSON.stringify({
       pContent: content,
@@ -43,13 +43,13 @@ export default function BlogPage() {
   return (
     <>
     <div className='w-full h-full flex justify-center'>
-      <div className='w-[1000px] mt-20 rounded-2xl bg-white mb-4 shadow-[0_0_10px_0_gray]'>
+      <div className='md:w-[1000px] md:mt-20 mt-[60px] md:rounded-2xl bg-white md:mb-4 shadow-[0_0_10px_0_gray]'>
         <div className=' relative mt-0 z-[1]'>
-          <img src={fImage} alt="" className='w-full h-[800px] rounded-t-2xl' />
+          <img src={fImage} alt="" className='w-full md:h-[800px] md:rounded-t-2xl' />
           {/* <div className='fImageEff'> */}
           <div className='absolute inset-0 bg-gradient-to-t from-black'>
-            <span className=' inline-block bottom-0 absolute text-white mb-20 text-[40px] font-bold ml-8'>{blog?.title}</span>
-            <span className=' inline-block bottom-0 absolute text-white mb-10 text-[20px] font-bold ml-8'>{blog?.author}</span>
+            <span className=' inline-block bottom-0 absolute text-white md:mb-20 mb-8 md:text-[40px] text-[16px] font-bold ml-8'>{blog?.title}</span>
+            <span className=' inline-block bottom-0 absolute text-white md:mb-10 mb-1 md:text-[20px] text-[] font-bold ml-8'>{blog?.author}</span>
           </div>
         </div>
         <div className=' m-8'>

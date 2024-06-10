@@ -23,9 +23,11 @@ export default function NewBlog() {
   const navigate = useNavigate();
   useEffect(() => {
     if (pFimage !== null) {
-      console.log("pFimage recieved: ", pFimage);
+      // console.log("pFimage recieved: ", pFimage);
       blogService.getFile(pFimage)
-        .then(data => { setFImage(data); console.log("pfimage data: ", data); })
+        .then(data => { setFImage(data);
+          // console.log("pfimage data: ", data); 
+        })
     }
   }, [])
   // const config = useMemo(
@@ -63,10 +65,10 @@ export default function NewBlog() {
     navigate("/");
   }
   const showcontent = () => {
-    console.log(content);
+    // console.log(content);
   }
   const handleCancel = () => {
-    console.log("home..");
+    // console.log("home..");
     navigate("/");
   }
   const config = useMemo(() => ({
@@ -94,22 +96,22 @@ export default function NewBlog() {
             <input type="text" placeholder='Title' value={title} onChange={event => setTitle(event.target.value)} className='w-11/12 outline-none shadow-lg h-[40px] pl-2 focus:border-b-violet-600 border-2 transition-[0.2s]' />
             {/* <input type="text" placeholder='Author' value={author} onChange={event => setAuthor(event.target.value)} className='w-11/12 outline-none shadow-lg h-[40px] pl-2 mt-10'/> */}
             <input type="file" placeholder='Author' onChange={event => {
-              console.log(event.target.files[0]);
+              // console.log(event.target.files[0]);
               setFImage(event.target.files[0]);
               if (pFimage !== null)
                 setUpdateImg(true);
             }} className='w-11/12 outline-none shadow-lg h-[40px] pl-2 mt-10' />
             {fImage !== null && pFimage === null ?
               <>
-                <span>Featured Image:</span>
+                <span className='md:mt-8 mt-6'>Featured Image:</span>
                 <img src={URL.createObjectURL(fImage)} alt="" className='w-[100px] h-[100px]' />
               </>
               :
               <>
-                <span>Featured Image:</span>
+                <span className='md:mt-8 mt-6'>Featured Image:</span>
                 <img src={fImage} alt="" className='w-[100px] h-[100px]' />
               </>}
-            <div className='grid grid-cols-2 mt-10 w-11/12 gap-x-3 text-[20px]'>
+            <div className='grid grid-cols-2 md:mt-10 mt-4 w-11/12 gap-x-3 text-[20px] md:mb-0 mb-5'>
               {updating ?
                 <button onClick={handleUpdate} className='cbtn h-[40px] outline-none hover:scale-105 active:scale-90 transition-[0.2s]'>Update</button>
                 :

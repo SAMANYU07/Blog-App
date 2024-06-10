@@ -22,14 +22,14 @@ export default function Home() {
     return <LoadingScreen/>
   if (!userLoggedIn)
     return <LoginPage/>
-  latestPosts?.map(blog => console.log(blog));
+  // latestPosts?.map(blog => console.log(blog));
   return (
     <>
     {/* {userLoggedIn ? null : <LoginPage/>} */}
     <div className=' mt-20'>
-      <div className=' ml-10 mr-10'>
+      <div className=' md:ml-10 md:mr-10 md:w-auto md:block flex flex-col items-center mb-10'>
         <span className='font-bold text-[20px]'>Latest Blogs</span>
-        <div className='flex gap-x-8 gap-y-10 mt-4 flex-wrap'>
+        <div className='flex md:flex-row flex-col gap-x-8 gap-y-10 mt-4 md:flex-wrap md:justify-start justify-center'>
         {
           latestPosts?.toReversed().map(blog => {
             return <BlogCard1 blog={blog}/>

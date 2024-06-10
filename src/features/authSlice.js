@@ -13,7 +13,6 @@ export const authSlice = createSlice({
   reducers: {
     toggleLoading: (state, action) => {
       state.loading = action.payload;
-      console.log("Loading: ", state.loading);
     },
     toggleUserLoggedIn: (state, action) => {
       state.userLoggedIn = action.payload;
