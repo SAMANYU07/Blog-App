@@ -1,0 +1,22 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+.cbtn {
+  background-color: rgb(124 58 237);
+  color: white;
+  border-radius: 8px;
+}
+.fImageEff {
+  /* background-color: aqua; */
+  z-index: 10;
+  margin-top: 100px;
+  border-bottom: 10px solid rgb(255, 197, 197);
+  border-style: inset;
+  border-color: black;
+}
