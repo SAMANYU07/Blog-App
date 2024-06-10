@@ -31,7 +31,7 @@ export default function Home() {
         <span className='font-bold text-[20px]'>Latest Blogs</span>
         <div className='flex md:flex-row flex-col gap-x-8 gap-y-10 mt-4 md:flex-wrap md:justify-start justify-center'>
         {
-          latestPosts?.toReversed().map(blog => {
+          latestPosts?.map(blog => {
             return <BlogCard1 blog={blog}/>
           })
         }

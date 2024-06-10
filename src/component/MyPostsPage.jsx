@@ -19,7 +19,7 @@ export default function MyPostsPage() {
       <span className=' font-bold text-[20px]'>My Posts</span>
       <div className='flex gap-x-8 gap-y-10 mt-4 md:flex-row md:flex-wrap flex-col'>
         {
-          myBlogs?.toReversed().map(blog => {
+          myBlogs?.map(blog => {
             return <BlogCard1 blog={blog}/>
           })
         }
