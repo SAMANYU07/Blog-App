@@ -12,9 +12,9 @@ export default function LoginPage() {
   const loading = useSelector(state => state.loading);
   const dispatch = useDispatch();
 
-  const handleLogin = () => {
+  const handleLogin = async () => {
     dispatch(toggleLoading(true));
-    authService.loginAccount({email, pass})
+    await authService.loginAccount({email, pass})
     .then(data => {
       if (data !== -1) {
         dispatch(toggleUserLoggedIn(true));
