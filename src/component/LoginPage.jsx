@@ -60,7 +60,7 @@ export default function LoginPage() {
   return (
     <>
     {/* <span onClick={listSessions} className=' cursor-pointer'>list</span> */}
-    <button onClick={handleLogout}>logout</button>
+    {/* <button onClick={handleLogout}>logout</button> */}
       {!haveAccount ?
         <div className=' md:w-[500px] w-[360px] h-[400px] flex flex-col items-center absolute -translate-x-1/2 -translate-y-1/2 left-1/2 top-1/2 bg-slate-200 rounded-lg shadow-[0_0_10px_0px_gray]'>
           <h1 className='text-[30px] mt-6'>Register</h1>
