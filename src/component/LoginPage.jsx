@@ -12,7 +12,7 @@ export default function LoginPage() {
   const loading = useSelector(state => state.loading);
   const dispatch = useDispatch();
 
-  const getSession = async (data) => {
+  const getSession = async () => {
     await authService.activeUserSession()
     .then(data => {
       if (data !== -1) {
@@ -28,7 +28,7 @@ export default function LoginPage() {
       if (data !== -1) {
         dispatch(toggleUserLoggedIn(true));
         setHaveAccount(true);
-        getSession(data);
+        getSession();
         // authService.activeUserSession()
         // .then(data => {
         //   if (data !== -1) {
