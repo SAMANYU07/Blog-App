@@ -20,3 +20,31 @@
   border-style: inset;
   border-color: black;
 }
+.blogcardanim {
+  animation-iteration-count: 0.5;
+  animation-duration: 400ms;
+}
+
+.btnedit {
+  animation: editanim 0.4s ease-in;
+}
+
+@keyframes editanim {
+  0% {
+    bottom: -80px;
+  }
+  100% {
+    bottom: 80px;
+  }
+}
+.btndel {
+  animation: delanim 0.4s ease-in;
+}
+@keyframes delanim {
+  0% {
+    bottom: -138px;
+  }
+  100% {
+    bottom: 138px;
+  }
+}

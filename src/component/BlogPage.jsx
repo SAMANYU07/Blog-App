@@ -59,10 +59,10 @@ export default function BlogPage() {
     </div>
     {blog?.userid === userID?
     <>
-        <div onClick={handleEdit} className='fixed mt-auto bottom-20 ml-auto right-4 h-[40px] w-[40px] bg-violet-600 rounded-full text-white flex items-center justify-center cursor-pointer hover:scale-110 transition-[0.2s]'>
+        <div onClick={handleEdit} className='fixed mt-auto bottom-20 btnedit ml-auto right-4 h-[40px] w-[40px] bg-violet-600 rounded-full text-white flex items-center justify-center cursor-pointer hover:scale-110 transition-[0.2s]'>
        <MdModeEditOutline className=''/>
     </div>
-    <div onClick={handleDelete} className='fixed mt-auto bottom-[138px] ml-auto right-4 h-[40px] w-[40px] bg-violet-600 rounded-full text-white flex items-center justify-center cursor-pointer hover:scale-110 transition-[0.2s]'>
+    <div onClick={handleDelete} className='fixed mt-auto bottom-[138px] btndel ml-auto right-4 h-[40px] w-[40px] bg-violet-600 rounded-full text-white flex items-center justify-center cursor-pointer hover:scale-110 transition-[0.2s]'>
        <MdDelete className=''/>
     </div>
     </>
