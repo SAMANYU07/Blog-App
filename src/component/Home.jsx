@@ -9,7 +9,7 @@ import { toggleLoading } from '../features/authSlice';
 export default function Home() {
   const userLoggedIn = useSelector(state => state.userLoggedIn);
   const loading = useSelector(state => state.loading);
-  const [latestPosts, setLatestPosts] = useState(null);
+  const [latestPosts, setLatestPosts] = useState();
   const dispatch = useDispatch();
   useEffect(() => {
     if (userLoggedIn) {
@@ -31,7 +31,7 @@ export default function Home() {
         <span className='font-bold text-[20px]'>Latest Blogs</span>
         <div className='flex md:flex-row flex-col gap-x-8 gap-y-10 mt-4 md:flex-wrap md:justify-start justify-center'>
         {
-          latestPosts?.map(blog => {
+          latestPosts?.reverse().map(blog => {
             return <BlogCard1 blog={blog}/>
           })
         }
