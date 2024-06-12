@@ -13,9 +13,9 @@ export default function LoginPage() {
   const loading = useSelector(state => state.loading);
   const dispatch = useDispatch();
   const transition = useTransition(haveAccount, {
-    from: { opacity: 0 },
-    enter: { opacity: 1 },
-    leave: { opacity: 0 },
+    from: { transform: "translate(-50%, -50%) scale(0%)" },
+    enter: { transform: "translate(-50%, -50%) scale(100%)" },
+    leave: { transform: "translate(-50%, -50%) scale(0%)" },
   });
 
   const getSession = async () => {

@@ -7,6 +7,7 @@ import NewBlog from './NewBlog';
 import { useDispatch, useSelector } from 'react-redux';
 import LoadingScreen from './LoadingScreen';
 import { toggleLoading } from '../features/authSlice';
+import { useTransition, animated } from 'react-spring';
 
 export default function BlogPage() {
   const { blog_id } = useParams();
@@ -17,6 +18,11 @@ export default function BlogPage() {
   const loading = useSelector(state => state.loading);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const transition = useTransition(loading, {
+    from: {width: "0px"},
+    enter: {width: "1000px"},
+    // leave: {width: "0px"},
+  });
   useEffect(() => {
     dispatch(toggleLoading(true));
     const loadBlogContent = async () => {
@@ -54,7 +60,9 @@ export default function BlogPage() {
   return (
     <>
     <div className='w-full h-full flex justify-center'>
-      <div className='md:w-[1000px] md:mt-20 mt-[60px] md:rounded-2xl bg-white md:mb-4 shadow-[0_0_10px_0_gray]'>
+      {transition((style, item) =>
+      item ? null :
+      <animated.div style={style} className='md:w-[1000px] md:mt-20 mt-[60px] md:rounded-2xl bg-white md:mb-4 shadow-[0_0_10px_0_gray]'>
         <div className=' relative mt-0 z-[1]'>
           <img src={fImage} alt="" className='w-full md:h-[800px] md:rounded-t-2xl' />
           {/* <div className='fImageEff'> */}
@@ -66,7 +74,8 @@ export default function BlogPage() {
         <div className=' m-8'>
           {parse(content)}
         </div>
-      </div>
+      </animated.div>
+      )}
     </div>
     {blog?.userid === userID?
     <>

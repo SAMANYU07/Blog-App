@@ -6,6 +6,7 @@ import blogService from '../appwrite/PostConfig';
 import { useSelector } from 'react-redux';
 import { ID } from 'appwrite';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { useTransition, animated } from 'react-spring';
 
 export default function NewBlog() {
   const location = useLocation();
@@ -21,6 +22,16 @@ export default function NewBlog() {
   const userID = useSelector(state => state.userID);
   const userName = useSelector(state => state.userName);
   const navigate = useNavigate();
+  const transition = useTransition(null, {
+    from: { marginLeft: "-1000px"},
+    enter: {  marginLeft: "0px"},
+    leave: {},
+  });
+  const transition1 = useTransition(null, {
+    from: { marginRight: "-1000px"},
+    enter: {  marginRight: "0px"},
+    leave: {},
+  });
   useEffect(() => {
     if (pFimage !== null) {
       // console.log("pFimage recieved: ", pFimage);
@@ -82,7 +93,8 @@ export default function NewBlog() {
     <>
       <div className=''>
         <div className='w-full h-64 grid md:grid-cols-4 mt-20 '>
-          <div className=' md:col-span-3 col-span-1'>
+          {transition((style, item) =>
+          <animated.div style={style} className=' md:col-span-3 col-span-1'>
             <JoditEditor
               ref={editor}
               value={content}
@@ -90,8 +102,10 @@ export default function NewBlog() {
               config={config}
             />
             {/* {content} */}
-          </div>
-          <div className='flex flex-col items-center md:mt-0 mt-10'>
+          </animated.div>
+          )}
+          {transition1((style, item) =>
+          <animated.div style={style} className='flex flex-col items-center md:mt-0 mt-10'>
             {/* <span className=' mr-auto ml-16'>Title:</span> */}
             <input type="text" placeholder='Title' value={title} onChange={event => setTitle(event.target.value)} className='w-11/12 outline-none shadow-lg h-[40px] pl-2 focus:border-b-violet-600 border-2 transition-[0.2s]' />
             {/* <input type="text" placeholder='Author' value={author} onChange={event => setAuthor(event.target.value)} className='w-11/12 outline-none shadow-lg h-[40px] pl-2 mt-10'/> */}
@@ -120,7 +134,8 @@ export default function NewBlog() {
               {/* <button onClick={handlePublish} className='cbtn h-[40px]'>Publish</button> */}
               <button onClick={handleCancel} className='h-[40px] bg-gray-500 rounded-lg text-white outline-none hover:scale-105 active:scale-90 transition-[0.2s]'>Cancel</button>
             </div>
-          </div>
+          </animated.div>
+          )}
         </div>
       </div>
     </>
