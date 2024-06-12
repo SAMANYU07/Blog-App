@@ -4,7 +4,9 @@ import blogService from '../appwrite/PostConfig';
 import parse from "html-react-parser";
 import { MdModeEditOutline, MdDelete } from "react-icons/md";
 import NewBlog from './NewBlog';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import LoadingScreen from './LoadingScreen';
+import { toggleLoading } from '../features/authSlice';
 
 export default function BlogPage() {
   const { blog_id } = useParams();
@@ -12,15 +14,22 @@ export default function BlogPage() {
   const [fImage, setFImage] = useState(null);
   const [content, setContent] = useState("");
   const userID = useSelector(state => state.userID);
+  const loading = useSelector(state => state.loading);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   useEffect(() => {
-    blogService.getBlog(blog_id)
+    dispatch(toggleLoading(true));
+    const loadBlogContent = async () => {
+      await blogService.getBlog(blog_id)
       .then(data => {
         setBlog(data);
         blogService.getFile(data.fImage)
           .then(data => setFImage(data));
         setContent(data?.content)
       });
+      dispatch(toggleLoading(false));
+    }
+    loadBlogContent();
   }, [])
   // console.log(blog.content);
   const handleEdit = () => {
@@ -40,6 +49,8 @@ export default function BlogPage() {
     await blogService.deleteBlog(blog.$id);
     navigate("/");
   }
+  if (loading)
+    return <LoadingScreen/>
   return (
     <>
     <div className='w-full h-full flex justify-center'>
