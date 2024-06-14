@@ -48,6 +48,13 @@ export class BlogService {
       console.log("Blog Deletion Error: ", error);
     }
   }
+  async addComment(blogid, cArray) {
+    try {
+      return await this.database.updateDocument(import.meta.env.VITE_APPWRITE_DATABASE_ID, import.meta.env.VITE_APPWRITE_COLLECTION_ID, blogid, {comments: cArray});
+    } catch (error) {
+      console.log("Comment Posting Error: ", error);
+    }
+  }
   async uploadFile({ file, fileid, userid }) {
     try {
       return await this.bucket.createFile(import.meta.env.VITE_APPWRITE_BUCKET_ID, fileid, file,
