@@ -4,6 +4,7 @@ import authService from '../appwrite/auth';
 import Button from './Button';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { toggleLoading, toggleUserLoggedIn } from '../features/authSlice';
+import { useTransition, animated } from 'react-spring';
 
 export default function Navbar() {
   const userName = useSelector(state => state.userName);
@@ -12,6 +13,11 @@ export default function Navbar() {
   const dispatch = useDispatch();
   // console.log("env: ", import.meta.env.VITE_APPWRITE_URL);
   const navigate = useNavigate();
+  const plusTransition = useTransition(creatingBlog, {
+    from: {bottom: "-20px"},
+    enter: {bottom: "24px"},
+    leave: {bottom: "-200px"},
+  })
   
   const handleNewBlog = () => {
     navigate("/newblog/");
@@ -40,10 +46,18 @@ export default function Navbar() {
       <span className=' mr-8 cursor-pointer hover:text-violet-600 transition-[0.2s]'><NavLink to="/myposts" className={({isActive}) => isActive ? ` text-violet-600` : " transition-[0.2s]"}>My Posts</NavLink></span>
       <button onClick={handleLogout} className=' mr-4 bg-violet-600 w-[80px] h-[30px] rounded-lg text-white hover:scale-105 active:scale-90 transition-[0.2s]'>Logout</button>
       {/* <Button children="Logout" width='80px' className='mr-4 hover:scale-105'/> */}
-      <div className='fixed right-4 mt-auto bottom-6'>
-        <button onClick={handleNewBlog} className={` w-[40px] h-[40px] text-[26px] bg-violet-600 rounded-full outline-none text-white ${creatingBlog ? " hidden" : " block"} hover:scale-110 active:scale-90 transition-[0.2s]`}>+</button>
+      {plusTransition((style, item) =>
+      !item ?
+      <animated.div style={style} className='fixed right-4 mt-auto bottom-6'>
+      <button onClick={handleNewBlog} className={` w-[40px] h-[40px] text-[26px] bg-violet-600 rounded-full outline-none text-white hover:scale-110 active:scale-90 transition-[0.2s]`}>+</button>
+      {/* <Button children="+" className='' rounded='rounded-full'/> */}
+    </animated.div>
+      :
+      null)}
+      {/* <div className='fixed right-4 mt-auto bottom-6'> */}
+        {/* <button onClick={handleNewBlog} className={` w-[40px] h-[40px] text-[26px] bg-violet-600 rounded-full outline-none text-white ${creatingBlog ? " hidden" : " block"} hover:scale-110 active:scale-90 transition-[0.2s]`}>+</button> */}
         {/* <Button children="+" className='' rounded='rounded-full'/> */}
-      </div>
+      {/* </div> */}
     </div>
     </>
   )

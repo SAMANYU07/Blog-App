@@ -5,6 +5,7 @@ const initialState = {
   userLoggedIn: false,
   userID: "",
   loading: false,
+  commentsArr: [],
 };
 
 export const authSlice = createSlice({
@@ -21,8 +22,22 @@ export const authSlice = createSlice({
       state.userID = action.payload.id;
       state.userName = action.payload.name;
     },
+    updatecommentsArr: (state, action) => {
+      state.commentsArr = action.payload;
+    },
+    addcommentsArr: (state, action) => {
+      console.log("Action.payload: ", action.payload);
+      const newItem = action.payload;
+      return {
+        ...state,
+        commentsArr: [...state.commentsArr, newItem],
+      }
+    },
+    delCommentsArr: (state, action) => {
+      
+    },
   }
 });
 
-export const { toggleLoading, toggleUserLoggedIn, updateUserDetails } = authSlice.actions;
+export const { toggleLoading, toggleUserLoggedIn, updateUserDetails, updatecommentsArr, addcommentsArr } = authSlice.actions;
 export default authSlice.reducer;
