@@ -21,6 +21,7 @@ export default function NewBlog() {
   const [updateImg, setUpdateImg] = useState(false);
   const userID = useSelector(state => state.userID);
   const userName = useSelector(state => state.userName);
+  const date = useSelector(state => state.date);
   const navigate = useNavigate();
   const transition = useTransition(null, {
     from: { marginLeft: "-1000px"},
@@ -59,7 +60,7 @@ export default function NewBlog() {
   }
   const handlePublish = async () => {
     const fileid = ID.unique();
-    await blogService.createBlog({ title: title, content: content, userid: userID, fImage: fileid, author: userName });
+    await blogService.createBlog({ title: title, content: content, userid: userID, fImage: fileid, author: userName, publishedOn: date });
     await blogService.uploadFile({ file: fImage, fileid: fileid, userid: userID });
     navigate("/");
   }
@@ -107,7 +108,7 @@ export default function NewBlog() {
           {transition1((style, item) =>
           <animated.div style={style} className='flex flex-col items-center md:mt-0 mt-10'>
             {/* <span className=' mr-auto ml-16'>Title:</span> */}
-            <input type="text" placeholder='Title' value={title} onChange={event => setTitle(event.target.value)} className='w-11/12 outline-none shadow-lg h-[40px] pl-2 focus:border-b-violet-600 border-2 transition-[0.2s]' />
+            <input type="text" placeholder='Title' value={title} onChange={event => title?.length < 65 ? setTitle(event.target.value): setTitle("")} className='w-11/12 outline-none shadow-lg h-[40px] pl-2 focus:border-b-violet-600 border-2 transition-[0.2s]' />
             {/* <input type="text" placeholder='Author' value={author} onChange={event => setAuthor(event.target.value)} className='w-11/12 outline-none shadow-lg h-[40px] pl-2 mt-10'/> */}
             <input type="file" placeholder='Author' onChange={event => {
               // console.log(event.target.files[0]);
@@ -129,7 +130,7 @@ export default function NewBlog() {
               {updating ?
                 <button onClick={handleUpdate} className='cbtn h-[40px] outline-none hover:scale-105 active:scale-90 transition-[0.2s]'>Update</button>
                 :
-                <button onClick={handlePublish} className='cbtn h-[40px] outline-none hover:scale-105 active:scale-90 transition-[0.2s]'>Publish</button>
+                <button onClick={title && handlePublish} className='cbtn h-[40px] outline-none hover:scale-105 active:scale-90 transition-[0.2s]'>Publish</button>
               }
               {/* <button onClick={handlePublish} className='cbtn h-[40px]'>Publish</button> */}
               <button onClick={handleCancel} className='h-[40px] bg-gray-500 rounded-lg text-white outline-none hover:scale-105 active:scale-90 transition-[0.2s]'>Cancel</button>

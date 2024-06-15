@@ -1,11 +1,19 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+
+const monthNames = ["January", "February", "March", "April", "May", "June",
+"July", "August", "September", "October", "November", "December"
+];
+const dt = new Date();
+var tdate = dt.getDate() + " " + monthNames[dt.getMonth()] + " " + dt.getFullYear();
+
 const initialState = {
   userName: "",
   userLoggedIn: false,
   userID: "",
   loading: false,
   commentsArr: [],
+  date: tdate,
 };
 
 export const authSlice = createSlice({
@@ -34,7 +42,7 @@ export const authSlice = createSlice({
       }
     },
     delCommentsArr: (state, action) => {
-      
+
     },
   }
 });

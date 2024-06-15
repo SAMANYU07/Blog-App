@@ -112,8 +112,9 @@ export default function BlogPage() {
                   <img src={fImage} alt="" className='w-full md:h-[800px] h-[300px] md:rounded-t-2xl' />
                   {/* <div className='fImageEff'> */}
                   <div className='absolute inset-0 bg-gradient-to-t from-black'>
-                    <span className=' inline-block bottom-0 absolute text-white md:mb-20 mb-8 md:text-[40px] text-[16px] font-bold ml-8'>{blog?.title}</span>
-                    <span className=' inline-block bottom-0 absolute text-white md:mb-10 mb-1 md:text-[20px] text-[] font-bold ml-8'>{blog?.author}</span>
+                    <span className=' inline-block bottom-0 absolute text-white md:mb-20 mb-12 md:text-[40px] text-[16px] font-bold ml-8'>{blog?.title}</span>
+                    <span className=' inline-block bottom-0 absolute text-white md:mb-10 mb-6 md:text-[20px] text-[] font-bold ml-8'>{blog?.author}</span>
+                    <span className=' inline-block bottom-0 absolute text-white md:mb-2 mb-1 md:text-[16px] text-[] font-bold ml-8'>{blog?.publishedOn}</span>
                   </div>
                 </div>
                 <div className=' m-8'>
