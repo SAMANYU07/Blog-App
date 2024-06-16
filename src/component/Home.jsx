@@ -44,7 +44,8 @@ export default function Home() {
       <div className=' mt-20'>
         <div className=' md:ml-10 md:mr-6 md:w-auto md:block flex flex-col items-center mb-10'>
           <span className='font-bold text-[20px]'>Latest Blogs</span>
-          <div className='flex md:flex-row flex-col gap-x-8 gap-y-10 mt-4 md:flex-wrap md:justify-start justify-center'>
+          {/* <div className='flex md:flex-row flex-col gap-x-8 gap-y-10 mt-4 md:flex-wrap md:justify-start justify-center'> */}
+          <div className='flex md:grid flex-col gap-y-10 mt-4 md:grid-cols-5 md:justify-start justify-center'>
             {
               latestPosts?.reverse().map(blog => {
                 return <BlogCard1 blog={blog} />

@@ -60,6 +60,7 @@ export default function BlogPage() {
       pTitle: blog?.title,
       pFimage: blog?.fImage,
       blog_id: blog_id,
+      pTags: blog?.tags,
     })
     navigate("/newblog", { state: serializedState })
   }

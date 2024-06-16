@@ -48,3 +48,31 @@
     bottom: 138px;
   }
 }
+/* CSS to customize scrollbar */
+/* Width of the scrollbar */
+::-webkit-scrollbar {
+  display: hidden;
+}
+::-webkit-scrollbar:hover {
+  display: block;
+}
+::-webkit-scrollbar {
+  width: 4px; /* You can adjust this value */
+  height: 4px;
+}
+
+/* Track (background) of the scrollbar */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle (thumb) of the scrollbar */
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 5px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
