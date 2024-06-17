@@ -91,7 +91,7 @@ export default function NewBlog() {
   }
   const handleAddTag = () => {
     if (tags?.length < 4)
-    setTags(t => [...t, newTag]);
+      setTags(t => [...t, newTag]);
     setNewTag("");
   }
   const handleRemTag = (tag) => {
