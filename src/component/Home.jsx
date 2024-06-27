@@ -62,7 +62,7 @@ export default function Home() {
           }
         </div>
           :
-          <div className='flex md:grid flex-col gap-y-10 mt-4 md:grid-cols-5 md:justify-start justify-center'>
+          <div className='flex flex-col gap-y-10 mt-4 md:flex-row md:flex-wrap md:gap-x-10 md:justify-start justify-center'>
           {
             latestPosts?.reverse().map(blog => {
               return <BlogCard1 key={blog?.$id} blog={blog} />
