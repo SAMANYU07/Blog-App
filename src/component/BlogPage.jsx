@@ -176,7 +176,7 @@ export default function BlogPage() {
             </>
         )}
         {searchResults?.length > 0 ?
-        <div className='md:fixed top-0 right-0 md:mt-32 mt-10'>
+        <div className='md:fixed top-0 right-0 md:mt-32 mt-10 w-[20%]'>
           <span className='font-bold text-[20px]'>Similar Blogs</span>
           <div className='md:flex hidden flex-col flex-wrap gap-x-10 overflow-y-auto overflow-x-hidden gap-y-2'>
             {
