@@ -39,7 +39,7 @@ export default function BlogPage() {
     dispatch(toggleLoading(true));
     const fetchBlogs = async () => {
       await blogService.getAllBlogs()
-      .then(data => setLatestPosts(data.documents));
+        .then(data => setLatestPosts(data.documents));
     }
     const loadBlogContent = async () => {
       await blogService.getBlog(blog_id)
@@ -56,7 +56,7 @@ export default function BlogPage() {
     }
     loadBlogContent();
     // setTimeout(() => {
-      fetchBlogs();
+    fetchBlogs();
 
     // }, 1000)
   }, [blog_id])
@@ -67,11 +67,11 @@ export default function BlogPage() {
         setSearchResults([]);
         latestPosts?.reverse().map(blog1 => {
           if (blog?.tags.some(tag => blog1.tags.includes(tag) && blog_id !== blog1.$id)) {
-            setR(v => v+1)
+            setR(v => v + 1)
             if (c > 3)
               return;
             c++;
-            setSearchResults(s => [...s, blog1]);            
+            setSearchResults(s => [...s, blog1]);
           }
         })
       }
@@ -126,10 +126,11 @@ export default function BlogPage() {
     // await blogService.addComment(blog_id, commentsArr);
     setCommentV("");
     setTimeout(() => {
-      window.scrollTo({
-        top: document.documentElement.scrollHeight,
-        behavior: 'smooth'  // Optional: smooth scrolling animation
-      });
+      if (window.innerWidth > 768)
+        window.scrollTo({
+          top: document.documentElement.scrollHeight,
+          behavior: 'smooth'  // Optional: smooth scrolling animation
+        });
 
     }, 400)
   }
@@ -141,9 +142,9 @@ export default function BlogPage() {
         {transition((style, item) =>
           item ? null :
             <>
-              <animated.div style={style} className={`md:w-[1000px] md:mt-20 ${searchResults?.length > 0 ? "md:ml-52" : ""} mt-[60px] md:rounded-2xl bg-white md:mb-4 shadow-[0_0_10px_0_gray]`}>
+              <animated.div style={style} className={`md:w-[1000px] md:mt-20 ${searchResults?.length > 0 ? "md:ml-24" : ""} mt-[60px] md:rounded-2xl bg-white md:mb-4 shadow-[0_0_10px_0_gray]`}>
                 <div className=' relative mt-0 z-[1]'>
-                  <img src={fImage} alt="" className='w-full md:h-[800px] h-[300px] md:rounded-t-2xl' />
+                  <img src={fImage} alt="" className='w-full md:h-[600px] h-[300px] md:rounded-t-2xl' />
                   {/* <div className='fImageEff'> */}
                   <div className='absolute inset-0 bg-gradient-to-t from-black'>
                     <span className=' inline-block bottom-0 absolute text-white md:mb-20 mb-12 md:text-[40px] text-[16px] font-bold ml-8'>{blog?.title}</span>
@@ -155,7 +156,7 @@ export default function BlogPage() {
                   {parse(content)}
                 </div>
               </animated.div>
-              <animated.div style={style} className={`md:w-[1000px] w-full ${searchResults?.length > 0 ? "md:ml-52" : ""} md:mt-20 mt-[60px] md:rounded-2xl bg-white md:mb-4 shadow-[0_0_10px_0_gray] flex flex-col items-center`}>
+              <animated.div style={style} className={`md:w-[1000px] w-full ${searchResults?.length > 0 ? "md:ml-24" : ""} md:mt-20 mt-[60px] md:rounded-2xl bg-white md:mb-4 shadow-[0_0_10px_0_gray] flex flex-col items-center`}>
                 <span className='font-bold text-[30px]'>Comments</span>
                 <textarea value={commentV} onChange={event => setCommentV(event.target.value)} type="text" className='w-11/12 m-8 mb-2 mt-2 p-1 bg-[#e9e9e9] outline-none focus:border-b-violet-600 border-2 transition-[0.2s]' placeholder='Your comment...' />
                 <button onClick={handleComment} className='cbtn md:w-[100px] w-1/4 outline-none hover:scale-105 active:scale-90 transition-[0.2s] h-[40px] ml-auto md:mr-10 mr-4'>Post</button> <hr className='h-[6px] w-11/12 mt-4 bg-[#e9e9e9]' />
@@ -176,26 +177,26 @@ export default function BlogPage() {
             </>
         )}
         {searchResults?.length > 0 ?
-        <div className='md:fixed top-0 right-0 md:mt-32 mt-10'>
-          <span className='font-bold text-[20px]'>Similar Blogs</span>
-          <div className='md:flex hidden flex-col flex-wrap gap-x-10 overflow-y-auto overflow-x-hidden gap-y-2'>
-            {
-              searchResults?.map(blog1 => {
-                return <BlogCard2 key={blog1.$id} blog={blog1} />
-              })
-            }
+          <div className='md:fixed top-0 right-0 md:mt-32 mt-10 md:w-[20%]'>
+            <span className='font-bold text-[20px]'>Similar Blogs</span>
+            <div className='md:flex hidden flex-col flex-wrap gap-x-10 overflow-y-auto overflow-x-hidden gap-y-2'>
+              {
+                searchResults?.map(blog1 => {
+                  return <BlogCard2 key={blog1.$id} blog={blog1} />
+                })
+              }
+            </div>
+            <div className='flex md:hidden items-center mb-2 flex-col flex-wrap gap-x-10 overflow-y-auto overflow-x-hidden gap-y-4'>
+              {
+                searchResults?.map(blog1 => {
+                  return <BlogCard1 key={blog1.$id} blog={blog1} />
+                })
+              }
+            </div>
           </div>
-          <div className='flex md:hidden items-center mb-2 flex-col flex-wrap gap-x-10 overflow-y-auto overflow-x-hidden gap-y-4'>
-            {
-              searchResults?.map(blog1 => {
-                return <BlogCard1 key={blog1.$id} blog={blog1} />
-              })
-            }
-          </div>
-        </div>
-         :
-         null
-         }
+          :
+          null
+        }
       </div>
       {blog?.userid === userID ?
         <>
