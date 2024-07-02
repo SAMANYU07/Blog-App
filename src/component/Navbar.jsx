@@ -69,7 +69,7 @@ export default function Navbar() {
     <>
       <div className=' h-[60px] bg-slate-200 items-center fixed md:flex hidden top-0 w-full shadow-[0_0_10px_0_gray] z-50 gap-x-8'>
         <div className='flex items-center justify-center'>
-          <span className=' mt-1 inline-block ml-1 font-bold text-[20px] cursor-pointer'> <AiOutlineMenu /> </span>
+          <span className=' mt-1 inline-block ml-1 font-bold text-[20px] cursor-pointer md:hidden'> <AiOutlineMenu /> </span>
           <span className=' mt-1 inline-block ml-1 font-bold text-[20px]'>{userName}</span>
         </div>
         <span className=' ml-auto mr8 cursor-pointer hover:text-violet-600 transition-[0.2s]'><NavLink to='' className={({ isActive }) => isActive ? ` text-violet-600` : " transition-[0.2s]"}>Home</NavLink></span>
@@ -91,19 +91,19 @@ export default function Navbar() {
         </div>
         <button onClick={handleLogout} className=' mr-4 bg-violet-600 w-[80px] h-[30px] rounded-lg text-white hover:scale-105 active:scale-90 transition-[0.2s]'>Logout</button>
         {/* <Button children="Logout" width='80px' className='mr-4 hover:scale-105'/> */}
-        {plusTransition((style, item) =>
-          !item ?
-            <animated.div style={style} className='fixed right-4 mt-auto bottom-6'>
-              <button onClick={handleNewBlog} className={` w-[40px] h-[40px] text-[26px] bg-violet-600 rounded-full outline-none text-white hover:scale-110 active:scale-90 transition-[0.2s]`}>+</button>
-              {/* <Button children="+" className='' rounded='rounded-full'/> */}
-            </animated.div>
-            :
-            null)}
         {/* <div className='fixed right-4 mt-auto bottom-6'> */}
         {/* <button onClick={handleNewBlog} className={` w-[40px] h-[40px] text-[26px] bg-violet-600 rounded-full outline-none text-white ${creatingBlog ? " hidden" : " block"} hover:scale-110 active:scale-90 transition-[0.2s]`}>+</button> */}
         {/* <Button children="+" className='' rounded='rounded-full'/> */}
         {/* </div> */}
       </div>
+      {plusTransition((style, item) =>
+        !item ?
+          <animated.div style={style} className='fixed right-4 mt-auto bottom-6'>
+            <button onClick={handleNewBlog} className={` w-[40px] h-[40px] text-[26px] bg-violet-600 rounded-full outline-none text-white hover:scale-110 active:scale-90 transition-[0.2s]`}>+</button>
+            {/* <Button children="+" className='' rounded='rounded-full'/> */}
+          </animated.div>
+          :
+          null)}
       <div className=' h-[60px] bg-slate-200 flex md:hidden items-center fixed top-0 w-full shadow-[0_0_10px_0_gray] z-50 gap-x-8'>
         <div className='flex items-center justify-center'>
           <span className=' mt-1 inline-block ml-1 font-bold text-[20px] cursor-pointer' onClick={() => setShowNavbar(n => !n)}> <AiOutlineMenu /> </span>
@@ -111,17 +111,19 @@ export default function Navbar() {
           {navbarTransition((style, show) =>
             show ?
               <animated.div style={style} className='fixed shadow-[0_0_10px_0_gray] flex flex-col gap-y-2 top-0 mt32 w-[50%] left-0 bg-slate-200 h-screen'>
-                <div className='flex items-center h-[60px]'>
-                <span className=' mt-1 inline-block ml-1 font-bold text-[20px] cursor-pointer' onClick={() => setShowNavbar(n => !n)}> <AiOutlineMenu /> </span>
-                <span className=' mt-1 inline-block ml-1 font-bold text-[20px]'>{userName}</span>
+                <div className='flex items-center h-[60px] border-2 border-b-gray-300'>
+                  <span className=' mt-1 inline-block ml-1 font-bold text-[20px] cursor-pointer' onClick={() => setShowNavbar(n => !n)}> <AiOutlineMenu /> </span>
+                  <span className=' mt-1 inline-block ml-1 font-bold text-[20px]'>{userName}</span>
                 </div>
-                <span className=' mr8 ml-4 cursor-pointer hover:text-violet-600 transition-[0.2s]'><NavLink onClick={() => setShowNavbar(n => !n)} to='' className={({ isActive }) => isActive ? ` text-violet-600` : " transition-[0.2s]"}>Home</NavLink></span>
-                <span className=' mr8 ml-4 cursor-pointer hover:text-violet-600 transition-[0.2s]'><NavLink onClick={() => setShowNavbar(n => !n)} to="/myposts" className={({ isActive }) => isActive ? ` text-violet-600` : " transition-[0.2s]"}>My Posts</NavLink></span>
-                <div className='mt-auto mb-4 justify-center items-center flex'>
-                <button onClick={() => {
-                  setShowNavbar(n => !n);
-                  handleLogout();
-                }} className=' mr4 mt-auto bottom-0 bg-violet-600 w-[50%] h-[30px] rounded-lg text-white hover:scale-105 active:scale-90 transition-[0.2s]'>Logout</button>
+                <span className=' mr8 pl-4 cursor-pointer border-2 border-b-gray-300 hover:text-violet-600 transition-[0.2s]'><NavLink onClick={() => setShowNavbar(n => !n)} to='' className={({ isActive }) => isActive ? ` text-violet-600` : " transition-[0.2s]"}>Home</NavLink></span>
+                <span className=' mr8 pl-4 cursor-pointer border-2 border-b-gray-300 hover:text-violet-600 transition-[0.2s]'><NavLink onClick={() => setShowNavbar(n => !n)} to="/myposts" className={({ isActive }) => isActive ? ` text-violet-600` : " transition-[0.2s]"}>My Posts</NavLink></span>
+                <div className='mt-auto mb-[10%] justify-center items-center flex'>
+                  <button onClick={() => {
+                    setShowNavbar(n => !n);
+                    handleLogout();
+                  }
+                  }
+                    className=' mr4 mt-auto bottom-0 bg-violet-600 w-[50%] h-[30px] rounded-lg text-white hover:scale-105 active:scale-90 transition-[0.2s]'>Logout</button>
                 </div>
               </animated.div>
               : null
@@ -133,13 +135,14 @@ export default function Navbar() {
             <animated.div style={style} className='flex ml-auto mr-4'>
               <input value={searchPost} onChange={event => setSearchPost(event.target.value)}
                 onKeyDown={(event) => {
+                  if (event.key === "Escape")
+                    setSearching(false);
                   if (event.key === "Enter") {
                     setSearching(false);
                     handleSearch();
                   }
                 }}
                 placeholder='Search blogs' type="text" className={`h-[30px] pl-1 pr-1 z-[5] outline-none focus:border-b-violet-600 border-2 transition-[0.2s]`} />
-              <button onClick={handleNewBlog} className={` w-[30px] h-[30px] flex items-center justify-center text-[26px] bg-violet-600 rounded-full outline-none text-white hover:scale-110 active:scale-90 transition-[0.2s]`}>+</button>
             </animated.div>
             :
             <animated.div style={style} className='ml-auto mr-4 text-[20px] cursor-pointer' onClick={() => setSearching(true)}>
