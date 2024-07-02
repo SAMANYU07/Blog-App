@@ -10,8 +10,8 @@ import { useLocation } from 'react-router-dom';
 
 export default function Home() {
   const location = useLocation();
-  const state = location.state && typeof(location.state) === "string" ? JSON.parse(location.state) : location.state;
-  const { tag } = state || { tag: null };
+  const state = location.state && typeof (location.state) === "string" ? JSON.parse(location.state) : location.state;
+  const { tag, searchQuery } = state || { tag: null, searchQuery: null };
   const userLoggedIn = useSelector(state => state.userLoggedIn);
   const loading = useSelector(state => state.loading);
   const [latestPosts, setLatestPosts] = useState();
@@ -52,23 +52,35 @@ export default function Home() {
       <div className=' mt-20'>
         <div className=' md:ml-10 md:mr-6 md:w-auto md:block flex flex-col items-center mb-10'>
           <span className='font-bold text-[20px]'>{tag !== null ? "Blogs tagged " + tag : "Latest Blogs"}</span>
-          {tag !== null ?
+          {searchQuery !== null ?
           <div className='flex flex-col gap-y-10 mt-4 md:flex-row md:flex-wrap md:gap-x-8 justify-center'>
-          {
-            latestPosts?.reverse().map(blog => {
-              if (blog?.tags.includes(tag))
-                return <BlogCard1 key={blog?.$id} blog={blog} />
-            })
+            {
+              latestPosts?.reverse().map(blog => {
+                if (blog?.title.toLowerCase().includes(searchQuery.toLowerCase()))
+                  return <BlogCard1 key={blog?.$id} blog={blog} />
+              })
+            }
+          </div>
+            :
+            tag !== null ?
+              <div className='flex flex-col gap-y-10 mt-4 md:flex-row md:flex-wrap md:gap-x-8 justify-center'>
+                {
+                  latestPosts?.reverse().map(blog => {
+                    if (blog?.tags.includes(tag))
+                      return <BlogCard1 key={blog?.$id} blog={blog} />
+                  })
+                }
+              </div>
+              :
+              <div className='flex flex-col gap-y-10 mt-4 md:flex-row md:flex-wrap md:gap-x-8 justify-center'>
+                {
+                  latestPosts?.reverse().map(blog => {
+                    return <BlogCard1 key={blog?.$id} blog={blog} />
+                  })
+                }
+              </div>
           }
-        </div>
-          :
-          <div className='flex flex-col gap-y-10 mt-4 md:flex-row md:flex-wrap md:gap-x-8 justify-center'>
           {
-            latestPosts?.reverse().map(blog => {
-              return <BlogCard1 key={blog?.$id} blog={blog} />
-            })
-          }
-        </div>
           }
           {/* <div className='flex md:flex-row flex-col gap-x-8 gap-y-10 mt-4 md:flex-wrap md:justify-start justify-center'> */}
           {/* <div className='flex md:grid flex-col gap-y-10 mt-4 md:grid-cols-5 md:justify-start justify-center'>
