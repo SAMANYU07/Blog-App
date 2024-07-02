@@ -118,7 +118,10 @@ export default function Navbar() {
                 <span className=' mr8 ml-4 cursor-pointer hover:text-violet-600 transition-[0.2s]'><NavLink onClick={() => setShowNavbar(n => !n)} to='' className={({ isActive }) => isActive ? ` text-violet-600` : " transition-[0.2s]"}>Home</NavLink></span>
                 <span className=' mr8 ml-4 cursor-pointer hover:text-violet-600 transition-[0.2s]'><NavLink onClick={() => setShowNavbar(n => !n)} to="/myposts" className={({ isActive }) => isActive ? ` text-violet-600` : " transition-[0.2s]"}>My Posts</NavLink></span>
                 <div className='mt-auto mb-4 justify-center items-center flex'>
-                <button onClick={handleLogout} className=' mr4 mt-auto bottom-0 bg-violet-600 w-[50%] h-[30px] rounded-lg text-white hover:scale-105 active:scale-90 transition-[0.2s]'>Logout</button>
+                <button onClick={() => {
+                  setShowNavbar(n => !n);
+                  handleLogout();
+                }} className=' mr4 mt-auto bottom-0 bg-violet-600 w-[50%] h-[30px] rounded-lg text-white hover:scale-105 active:scale-90 transition-[0.2s]'>Logout</button>
                 </div>
               </animated.div>
               : null
