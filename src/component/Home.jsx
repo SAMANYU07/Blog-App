@@ -52,7 +52,7 @@ export default function Home() {
       <div className=' mt-20'>
         <div className=' md:ml-10 md:mr-6 md:w-auto md:block flex flex-col items-center mb-10'>
           <span className='font-bold text-[20px]'>{tag !== null ? "Blogs tagged " + tag : "Latest Blogs"}</span>
-          {searchQuery !== null ?
+          {searchQuery !== null && searchQuery !== undefined ?
           <div className='flex flex-col gap-y-10 mt-4 md:flex-row md:flex-wrap md:gap-x-8 justify-center'>
             {
               latestPosts?.reverse().map(blog => {
