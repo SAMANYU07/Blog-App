@@ -22,6 +22,7 @@ export default function BlogPage() {
   const [blog, setBlog] = useState(null);
   const [fImage, setFImage] = useState(null);
   const [content, setContent] = useState("");
+  const [deleting, setDeleting] = useState(false);
   // const [commentsArr, setCommentsArr] = useState([]);
   const [commentV, setCommentV] = useState("");
   const userID = useSelector(state => state.userID);
@@ -98,6 +99,7 @@ export default function BlogPage() {
     navigate("/newblog", { state: serializedState })
   }
   const handleDelete = async () => {
+    setDeleting(true);
     await blogService.deleteFile(blog?.fImage);
     await blogService.deleteBlog(blog.$id);
     navigate("/");
@@ -203,8 +205,8 @@ export default function BlogPage() {
           <div onClick={handleEdit} className='fixed mt-auto bottom-20 btnedit ml-auto right-4 h-[40px] w-[40px] bg-violet-600 rounded-full text-white flex items-center justify-center cursor-pointer hover:scale-110 transition-[0.2s]'>
             <MdModeEditOutline className='' />
           </div>
-          <div onClick={handleDelete} className='fixed mt-auto bottom-[138px] btndel ml-auto right-4 h-[40px] w-[40px] bg-violet-600 rounded-full text-white flex items-center justify-center cursor-pointer hover:scale-110 transition-[0.2s]'>
-            <MdDelete className='' />
+          <div onClick={handleDelete} className={`fixed mt-auto bottom-[138px] btndel ml-auto right-4 h-[40px] w-[40px] bg-violet-600 rounded-full text-white flex items-center justify-center cursor-pointer hover:scale-110 transition-[0.2s]`}>
+            <MdDelete className={`${deleting ? " animate-pulse" : ""}`} />
           </div>
         </>
         :

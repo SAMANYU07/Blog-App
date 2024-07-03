@@ -7,6 +7,7 @@ import { useSelector } from 'react-redux';
 import { ID } from 'appwrite';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useTransition, animated } from 'react-spring';
+import LoadingScreen from './LoadingScreen';
 
 export default function NewBlog() {
   const location = useLocation();
@@ -135,7 +136,7 @@ export default function NewBlog() {
                     }
                   }} type="text" placeholder='Enter Tag' value={newTag} onChange={event => newTag?.length < 30 ? setNewTag(event.target.value.toLowerCase()) : setNewTag("")} className=' mt-2 w-1112 col-span-8 outline-none shadow-lg h-[40px] pl-2 focus:border-b-violet-600 border-2 transition-[0.2s]' />
                   <div className=' col-span-2 flex items-center justify-center mt-[10%]'>
-                  <button onClick={handleAddTag} className='rounded-full ml-1 bg-violet-600 text-white w-[32px] h-[32px] hover:scale-110 active:scale-90 transition-[0.2s]'>+</button>
+                    <button onClick={handleAddTag} className='rounded-full ml-1 bg-violet-600 text-white w-[32px] h-[32px] hover:scale-110 active:scale-90 transition-[0.2s]'>+</button>
                   </div>
                 </div>
                 <div className='flex flex-wrap gap-x-1'>
@@ -144,9 +145,9 @@ export default function NewBlog() {
                     tags?.map(tag => {
                       return (
                         <>
-                          <div key={tag} className='flex flex-wrap items-center'>
+                          <div id={tag} key={tag} className='flex flex-wrap items-center'>
                             {tag}
-                            <button onClick={() => handleRemTag(tag)} className='bg-violet-600 w-[20px] h-[20px] rounded-md'>-</button>
+                            <button onClick={() => handleRemTag(tag)} className='bg-violet-600 flex items-center justify-center text-white w-[20px] h-[20px] rounded-md'>-</button>
                           </div>
                         </>
                       )
@@ -173,9 +174,19 @@ export default function NewBlog() {
                 </>}
               <div className='grid grid-cols-2 md:mt-10 mt-4 w-11/12 gap-x-3 text-[20px] md:mb-0 mb-5'>
                 {updating ?
-                  <button onClick={handleUpdate} className='cbtn h-[40px] outline-none hover:scale-105 active:scale-90 transition-[0.2s]'>{saveClicked ? "Saving" : "Save"}</button>
+                  <button onClick={handleUpdate} className='cbtn flex items-center justify-center h-[40px] outline-none hover:scale-105 active:scale-90 transition-[0.2s]'>{saveClicked ? <>
+                    <div className='flex'>
+                      <span className='mr-1'>Saving</span>
+                      <LoadingScreen lheight='h-[30px]' lwidth='w-[30px]' aheight='h-[30px]' awidth='w-[30px]' />
+                    </div>
+                  </> : "Save"}  </button>
                   :
-                  <button onClick={title && handlePublish} className='cbtn h-[40px] outline-none hover:scale-105 active:scale-90 transition-[0.2s]'>{publishClicked ? "Publishing" : "Publish"}</button>
+                  <button onClick={title && handlePublish} className='cbtn flex items-center justify-center h-[40px] outline-none hover:scale-105 active:scale-90 transition-[0.2s]'>{publishClicked ? <>
+                    <div className='flex'>
+                      <span className='mr-1'>Publishing</span>
+                      <LoadingScreen lheight='h-[30px]' lwidth='w-[30px]' aheight='h-[30px]' awidth='w-[30px]' />
+                    </div>
+                  </> : "Publish"}</button>
                 }
                 {/* <button onClick={handlePublish} className='cbtn h-[40px]'>Publish</button> */}
                 <button onClick={handleCancel} className='h-[40px] bg-gray-500 rounded-lg text-white outline-none hover:scale-105 active:scale-90 transition-[0.2s]'>Cancel</button>
