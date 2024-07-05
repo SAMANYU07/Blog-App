@@ -123,7 +123,7 @@ export default function Home() {
           null
       )}
       {/* {userLoggedIn ? null : <LoginPage/>} */}
-      <div className=' mt-20'>
+      <div className={` mt-20 ${loading ? "hidden" : "block"}`}>
         {latestPosts.length === 0 && searchedPosts.length === 0 && taggedPosts.length === 0 ? <LoadingScreen lwidth='w-screen' lheight='h-screen'/> : null}
         <div className=' md:ml-10 md:mr-6 md:w-auto md:block flex flex-col items-center mb-10'>
           {loading && (searchQuery !== null && searchQuery !== undefined) ? <span className='font-bold text-[20px]'>Search Results:</span> :

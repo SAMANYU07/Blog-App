@@ -74,6 +74,7 @@ export default function Navbar() {
         </div>
         <span className=' ml-auto mr8 cursor-pointer hover:text-violet-600 transition-[0.2s]'><NavLink to='' className={({ isActive }) => isActive ? ` text-violet-600` : " transition-[0.2s]"}>Home</NavLink></span>
         <span className=' mr8 cursor-pointer hover:text-violet-600 transition-[0.2s]'><NavLink to="/myposts" className={({ isActive }) => isActive ? ` text-violet-600` : " transition-[0.2s]"}>My Posts</NavLink></span>
+        <span className=' mr8 cursor-pointer hover:text-violet-600 transition-[0.2s]'><NavLink to={!window.location.href.includes("favorites") ? "/favorites" : null} className={({ isActive }) => isActive ? ` text-violet-600` : " transition-[0.2s]"}>Favorites</NavLink></span>
         <div className='flex'>
           <input value={searchPost} onChange={event => setSearchPost(event.target.value)}
             onKeyDown={(event) => {
@@ -117,13 +118,14 @@ export default function Navbar() {
                 </div>
                 <span className=' mr8 pl-4 cursor-pointer border-2 border-b-gray-300 hover:text-violet-600 transition-[0.2s]'><NavLink onClick={() => setShowNavbar(n => !n)} to='' className={({ isActive }) => isActive ? ` text-violet-600` : " transition-[0.2s]"}>Home</NavLink></span>
                 <span className=' mr8 pl-4 cursor-pointer border-2 border-b-gray-300 hover:text-violet-600 transition-[0.2s]'><NavLink onClick={() => setShowNavbar(n => !n)} to="/myposts" className={({ isActive }) => isActive ? ` text-violet-600` : " transition-[0.2s]"}>My Posts</NavLink></span>
-                <div className='mt-auto mb-[10%] justify-center items-center flex'>
+                <span className=' mr8 pl-4 cursor-pointer border-2 border-b-gray-300 hover:text-violet-600 transition-[0.2s]'><NavLink onClick={() => setShowNavbar(n => !n)} to={!window.location.href.includes("favorites") ? "/favorites" : null} className={({ isActive }) => isActive ? ` text-violet-600` : " transition-[0.2s]"}>Favorites</NavLink></span>
+                <div className='mt-auto mb-[20%] justify-center items-center flex'>
                   <button onClick={() => {
                     setShowNavbar(n => !n);
                     handleLogout();
                   }
                   }
-                    className=' mr4 mt-auto bottom-0 bg-violet-600 w-[50%] h-[30px] rounded-lg text-white hover:scale-105 active:scale-90 transition-[0.2s]'>Logout</button>
+                    className=' mr4 bg-violet-600 w-[50%] h-[30px] rounded-lg text-white hover:scale-105 active:scale-90 transition-[0.2s]'>Logout</button>
                 </div>
               </animated.div>
               : null

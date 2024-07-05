@@ -48,6 +48,27 @@ export class BlogService {
       console.log("Blog Deletion Error: ", error);
     }
   }
+  async addToFavorites(blogids) {
+    try {
+      return await this.database.createDocument(import.meta.env.VITE_APPWRITE_DATABASE_ID, import.meta.env.VITE_APPWRITE_COLLECTION_ID2, ID.unique(), blogids);
+    } catch (error) {
+      console.log("Favorite adding error: ", error);
+    }
+  }
+  async getAllFavorites() {
+    try {
+      return await this.database.listDocuments(import.meta.env.VITE_APPWRITE_DATABASE_ID, import.meta.env.VITE_APPWRITE_COLLECTION_ID2);
+    } catch (error) {
+      console.log("Error fetching favorites: ", error);
+    }
+  }
+  async updateFavorites(favid, uFav) {
+    try {
+      return await this.database.updateDocument(import.meta.env.VITE_APPWRITE_DATABASE_ID, import.meta.env.VITE_APPWRITE_COLLECTION_ID2, favid, uFav);
+    } catch (error) {
+      console.log("Error updating favorites: ", error);
+    }
+  }
   async addComment(blogid, cArray) {
     try {
       return await this.database.updateDocument(import.meta.env.VITE_APPWRITE_DATABASE_ID, import.meta.env.VITE_APPWRITE_COLLECTION_ID, blogid, {comments: cArray});
