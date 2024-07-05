@@ -4,6 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { IoStar } from "react-icons/io5";
 import { useSelector } from 'react-redux';
 import { IconContext } from 'react-icons';
+import LoadingScreen from './LoadingScreen';
 
 export default function BlogCard1({ blog, delblog }) {
   const [imgFile, setImgFile] = useState(null);
@@ -49,7 +50,8 @@ export default function BlogCard1({ blog, delblog }) {
           blogService.updateFavorites(fav.$id, {userid: userid, fBlogs: favArr});
         }
       })
-      delblog(blog.$id);
+      if (window.location.href.includes("/favorites"))
+        delblog(blog.$id);
       setFavLoading(false);
     })
     setIsFav(false);
@@ -81,9 +83,11 @@ export default function BlogCard1({ blog, delblog }) {
       onMouseEnter={() => setHovering(true)}
       onMouseLeave={() => setHovering(false)}
       >
-        <IconContext.Provider value={isFav ? { color: 'gold', size: '20px' } : { color: 'rgb(134,239,172)', size: '20px' }}>
-          <IoStar onClick={!isFav ? handleAddToFavorites : handleRemFavorites} className={`absolute ml-1 mt-1 ${hovering ? "block" : "md:hidden"} ${favLoading ? " animate-spin" : ""}`} />
+        {favLoading ? <span className='absolute ml-2 mt-2'><LoadingScreen lheight='h-[20px]' lwidth='w-[20px]' aheight='h-[20px]' awidth='w-[20px]'/></span> :
+        <IconContext.Provider value={isFav ? { color: 'gold', size: '20px' } : { color: 'rgb(51 65 85)', size: '20px' }}>
+          <IoStar onClick={!isFav ? handleAddToFavorites : handleRemFavorites} className={`absolute ml-1 h-[28px] w-[28px]  mt-1 ${hovering ? "block" : "md:hidden"} ${favLoading ? " animate-pulse" : ""}`} />
         </IconContext.Provider>
+        }
         <Link to={`/blog/` + blog.$id}><img src={imgFile} alt="" height="" className='h-[230px] w-[340px] rounded-t-lg' /></Link>
         <div className=' mt-4 ml-4'>
           <Link to={`/blog/` + blog.$id}>
