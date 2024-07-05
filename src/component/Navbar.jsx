@@ -119,7 +119,7 @@ export default function Navbar() {
                 <span className=' mr8 pl-4 cursor-pointer border-2 border-b-gray-300 hover:text-violet-600 transition-[0.2s]'><NavLink onClick={() => setShowNavbar(n => !n)} to='' className={({ isActive }) => isActive ? ` text-violet-600` : " transition-[0.2s]"}>Home</NavLink></span>
                 <span className=' mr8 pl-4 cursor-pointer border-2 border-b-gray-300 hover:text-violet-600 transition-[0.2s]'><NavLink onClick={() => setShowNavbar(n => !n)} to="/myposts" className={({ isActive }) => isActive ? ` text-violet-600` : " transition-[0.2s]"}>My Posts</NavLink></span>
                 <span className=' mr8 pl-4 cursor-pointer border-2 border-b-gray-300 hover:text-violet-600 transition-[0.2s]'><NavLink onClick={() => setShowNavbar(n => !n)} to={!window.location.href.includes("favorites") ? "/favorites" : null} className={({ isActive }) => isActive ? ` text-violet-600` : " transition-[0.2s]"}>Favorites</NavLink></span>
-                <div className='mt-auto mb-[20%] justify-center items-center flex'>
+                <div className='mt-auto mb-[30%] justify-center items-center flex'>
                   <button onClick={() => {
                     setShowNavbar(n => !n);
                     handleLogout();
