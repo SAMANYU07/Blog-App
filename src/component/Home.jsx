@@ -163,7 +163,7 @@ export default function Home() {
               postPage > 1 ?
               <MdArrowLeft className=' outline-none hover:scale-110 active:scale-90 hover:text-violet-600' /> : null
               } </button>
-            <input type="text" value={postPage} onChange={event => setPostPage(event.target.value)} className='w-[30px] text-center outline-none' />
+            <input type="text" value={postPage} className='w-[30px] text-center outline-none' />
             <button onClick={handleIncPostPage}> {
               postPage * 10 >= totalPosts ? null :
                 <MdArrowRight className=' outline-none hover:scale-110 active:scale-90 hover:text-violet-600' />
