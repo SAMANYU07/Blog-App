@@ -76,3 +76,31 @@
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
 }
+
+.blogCard2 {
+  background-color: white;
+  color: black;
+  position: relative;
+  z-index: 10;
+}
+.blogCard2_content {
+  z-index: 10;
+  /* color: black; */
+  position: relative;
+}
+.blogCard2::after {
+  content: '';
+  position: absolute;
+  height: 100%;
+  width: 0;
+  background-color: black;
+  border-radius: 8px;
+  bottom: 0;
+  transition: 200ms;
+  z-index: 0;
+}
+.blogCard2:hover::after {
+  width: 100%;
+  color: white;
+  z-index: 0;
+}

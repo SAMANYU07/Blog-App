@@ -19,7 +19,7 @@ export default function Navbar() {
   const dispatch = useDispatch();
   // console.log("env: ", import.meta.env.VITE_APPWRITE_URL);
   const navigate = useNavigate();
-  const plusTransition = useTransition(creatingBlog, {
+  const plusTransition = useTransition(userLoggedIn && !creatingBlog, {
     from: { bottom: "-20px" },
     enter: { bottom: "24px" },
     leave: { bottom: "-200px" },
@@ -33,6 +33,11 @@ export default function Navbar() {
     from: { x: "-400px" },
     enter: { x: "0px" },
     leave: { x: "-400px" },
+  })
+  const pcNavbarTransition = useTransition(userLoggedIn, {
+    from: {top: "-100px"},
+    enter: {top: "0"},
+    leave: {top: "-100px"},
   })
 
   const handleNewBlog = () => {
@@ -63,11 +68,13 @@ export default function Navbar() {
   useEffect(() => {
     searchPost.length > 0 ? setSearching(true) : setSearching(false);
   }, [searchPost])
-  if (!userLoggedIn)
-    return null;
+  // if (!userLoggedIn)
+  //   return null;
   return (
     <>
-      <div className=' h-[60px] bg-slate-200 items-center fixed md:flex hidden top-0 w-full shadow-[0_0_10px_0_gray] z-50 gap-x-8'>
+    {pcNavbarTransition((style, show) =>
+    show ?
+      <animated.div style={style} className=' h-[60px] bg-slate-200 items-center fixed md:flex hidden top-0 w-full shadow-[0_0_10px_0_gray] z-50 gap-x-8'>
         <div className='flex items-center justify-center'>
           <span className=' mt-1 inline-block ml-1 font-bold text-[20px] cursor-pointer md:hidden'> <AiOutlineMenu /> </span>
           <span className=' mt-1 inline-block ml-1 font-bold text-[20px]'>{userName}</span>
@@ -96,16 +103,20 @@ export default function Navbar() {
         {/* <button onClick={handleNewBlog} className={` w-[40px] h-[40px] text-[26px] bg-violet-600 rounded-full outline-none text-white ${creatingBlog ? " hidden" : " block"} hover:scale-110 active:scale-90 transition-[0.2s]`}>+</button> */}
         {/* <Button children="+" className='' rounded='rounded-full'/> */}
         {/* </div> */}
-      </div>
+      </animated.div>
+      :null
+    )}
       {plusTransition((style, item) =>
-        !item ?
+        item ?
           <animated.div style={style} className='fixed right-4 mt-auto bottom-6'>
             <button onClick={handleNewBlog} className={` w-[40px] h-[40px] text-[26px] bg-violet-600 rounded-full outline-none text-white hover:scale-110 active:scale-90 transition-[0.2s]`}>+</button>
             {/* <Button children="+" className='' rounded='rounded-full'/> */}
           </animated.div>
           :
           null)}
-      <div className=' h-[60px] bg-slate-200 flex md:hidden items-center fixed top-0 w-full shadow-[0_0_10px_0_gray] z-50 gap-x-8'>
+      {pcNavbarTransition((style, show) =>
+      show ?
+      <animated.div style={style} className=' h-[60px] bg-slate-200 flex md:hidden items-center fixed top-0 w-full shadow-[0_0_10px_0_gray] z-50 gap-x-8'>
         <div className='flex items-center justify-center'>
           <span className=' mt-1 inline-block ml-1 font-bold text-[20px] cursor-pointer' onClick={() => setShowNavbar(n => !n)}> <AiOutlineMenu /> </span>
           <span className=' mt-1 inline-block ml-1 font-bold text-[20px]'>{userName}</span>
@@ -151,7 +162,9 @@ export default function Navbar() {
               <MdSearch />
             </animated.div>
         )}
-      </div>
+      </animated.div>
+      : null
+      )}
     </>
   )
 }
