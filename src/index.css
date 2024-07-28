@@ -109,3 +109,19 @@
   color: white;
   z-index: 0;
 }
+.navLink {
+  position: relative;
+}
+.navLink::after {
+  content: '';
+  position: absolute;
+  background-color: rgb(124 58 237);
+  width: 0%;
+  height: 10%;
+  left: 0;
+  bottom: 0;
+  transition: 0.2s;
+}
+.navLink:hover::after {
+  width: 100%;
+}

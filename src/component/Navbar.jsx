@@ -79,9 +79,9 @@ export default function Navbar() {
           <span className=' mt-1 inline-block ml-1 font-bold text-[20px] cursor-pointer md:hidden'> <AiOutlineMenu /> </span>
           <span className=' mt-1 inline-block ml-1 font-bold text-[20px]'>{userName}</span>
         </div>
-        <span className=' ml-auto mr8 cursor-pointer hover:text-violet-600 transition-[0.2s]'><NavLink to='' className={({ isActive }) => isActive ? ` text-violet-600` : " transition-[0.2s]"}>Home</NavLink></span>
-        <span className=' mr8 cursor-pointer hover:text-violet-600 transition-[0.2s]'><NavLink to="/myposts" className={({ isActive }) => isActive ? ` text-violet-600` : " transition-[0.2s]"}>My Posts</NavLink></span>
-        <span className=' mr8 cursor-pointer hover:text-violet-600 transition-[0.2s]'><NavLink to={!window.location.href.includes("favorites") ? "/favorites" : null} className={({ isActive }) => isActive ? ` text-violet-600` : " transition-[0.2s]"}>Favorites</NavLink></span>
+        <span className=' ml-auto mr8 cursor-pointer transition-[0.2s] navLink'><NavLink to='' className={({ isActive }) => isActive ? ` text-violet-600` : " transition-[0.2s]"}>Home</NavLink></span>
+        <span className=' mr8 cursor-pointer transition-[0.2s] navLink'><NavLink to="/myposts" className={({ isActive }) => isActive ? ` text-violet-600` : " transition-[0.2s]"}>My Posts</NavLink></span>
+        <span className=' mr8 cursor-pointer transition-[0.2s] navLink'><NavLink to={!window.location.href.includes("favorites") ? "/favorites" : null} className={({ isActive }) => isActive ? ` text-violet-600` : " transition-[0.2s]"}>Favorites</NavLink></span>
         <div className='flex'>
           <input value={searchPost} onChange={event => setSearchPost(event.target.value)}
             onKeyDown={(event) => {
@@ -116,7 +116,7 @@ export default function Navbar() {
           null)}
       {pcNavbarTransition((style, show) =>
       show ?
-      <animated.div style={style} className=' h-[60px] bg-slate-200 flex md:hidden items-center fixed top-0 w-full shadow-[0_0_10px_0_gray] z-50 gap-x-8'>
+      <animated.div style={style} className=' h-[60px] bg-slate-200 flex md:hidden items-center fixed top-0 w-full shadow-[0_0_10px_0_gray] z-50 gap-x-8 navbar'>``
         <div className='flex items-center justify-center'>
           <span className=' mt-1 inline-block ml-1 font-bold text-[20px] cursor-pointer' onClick={() => setShowNavbar(n => !n)}> <AiOutlineMenu /> </span>
           <span className=' mt-1 inline-block ml-1 font-bold text-[20px]'>{userName}</span>
