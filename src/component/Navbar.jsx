@@ -74,7 +74,7 @@ export default function Navbar() {
     <>
     {pcNavbarTransition((style, show) =>
     show ?
-      <animated.div style={style} className=' h-[60px] bg-slate-200 items-center fixed md:flex hidden top-0 w-full shadow-[0_0_10px_0_gray] z-50 gap-x-8'>
+      <animated.div style={style} className=' h-[60px] bg-slate-200 items-center fixed md:flex hidden top-0 w-full shadow-[0_0_10px_0_gray] z-50 gap-x-8 navbar'>
         <div className='flex items-center justify-center'>
           <span className=' mt-1 inline-block ml-1 font-bold text-[20px] cursor-pointer md:hidden'> <AiOutlineMenu /> </span>
           <span className=' mt-1 inline-block ml-1 font-bold text-[20px]'>{userName}</span>

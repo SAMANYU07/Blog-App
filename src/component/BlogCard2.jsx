@@ -14,9 +14,9 @@ export default function BlogCard1({ blog }) {
     navigate("/", { state: serializedState });
   }
   const similarTransition = useTransition(null, {
-    from: { x: "1000px" },
-    enter: { x: "0px" },
-    leave: { x: "1000px" },
+    from: { x: "300px", opacity: 0 },
+    enter: { x: "0px", opacity: 1 },
+    leave: { x: "300px", opacity: 0 },
   })
   // const hoverImgTransition = useTransition(null, {
   //   from: {},

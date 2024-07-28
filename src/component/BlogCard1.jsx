@@ -89,7 +89,7 @@ export default function BlogCard1({ blog, delblog }) {
         onMouseEnter={() => setHovering(true)}
         onMouseLeave={() => setHovering(false)}
       >
-        {favLoading ? <span className='absolute ml-2 mt-2'><LoadingScreen lheight='h-[20px]' lwidth='w-[20px]' aheight='h-[20px]' awidth='w-[20px]' /></span> :
+        {favLoading && hovering ? <span className='absolute ml-2 mt-2'><LoadingScreen lheight='h-[20px]' lwidth='w-[20px]' aheight='h-[20px]' awidth='w-[20px]' /></span> :
           <>
             {favTransition((style, hvr) =>
               hvr ?
