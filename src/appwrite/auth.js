@@ -27,7 +27,7 @@ export class AuthService
     try {
       return await this.account.createEmailPasswordSession(payload.email, payload.pass);
     } catch (error) {
-      // console.log("Account login error", error);
+      console.log("Account login error", error);
       return -1;
     }
   }

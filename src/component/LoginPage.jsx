@@ -5,10 +5,12 @@ import LoadingScreen from './LoadingScreen';
 import { toggleLoading, toggleUserLoggedIn, updateUserDetails } from '../features/authSlice';
 import { useTransition, animated } from 'react-spring';
 import { useForm } from 'react-hook-form';
+import ErrorCard from './ErrorCard';
 
 export default function LoginPage() {
   const { register, handleSubmit, formState: { errors } } = useForm();
   const [haveAccount, setHaveAccount] = useState(false);
+  const [showLoginError, setShowLoginError] = useState(false);
   const loading = useSelector(state => state.loading);
   const dispatch = useDispatch();
   const transition = useTransition(haveAccount, {
@@ -32,6 +34,7 @@ export default function LoginPage() {
     await authService.loginAccount(fdata)
       .then(data => {
         if (data !== -1) {
+          console.log("Login Data: ", data);
           dispatch(toggleUserLoggedIn(true));
           setHaveAccount(true);
           getSession();
@@ -41,6 +44,12 @@ export default function LoginPage() {
           //     dispatch(updateUserDetails({id: data.$id, name: data.name}));
           //   }
           // })
+        }
+        else
+        {
+          dispatch(toggleLoading(false));
+          setShowLoginError(true);
+          console.log("Error data: ", data);
         }
       })
     // dispatch(toggleLoading(false));
@@ -105,6 +114,7 @@ export default function LoginPage() {
         </animated.div> :
           <animated.div style={style} className=' md:w-[500px] w-[360px] h-[400px] flex flex-col items-center absolute -translate-x-1/2 -translate-y-1/2 left-1/2 top-1/2 bg-slate-200 rounded-lg shadow-[0_0_10px_0px_gray]'>
             <h1 className='text-[30px] mt-6'>Login</h1>
+              {showLoginError ? <ErrorCard errorMessage="Please check email id and password."/> : null}
             <form onSubmit={handleSubmit(handleLogin)} className='flex flex-col items-center'>
               <input {...register("email", {
                 required: "Email is required.",
@@ -120,6 +130,7 @@ export default function LoginPage() {
                 <span className=''>Don't have an account?</span> <span className=' cursor-pointer text-violet-800' onClick={() => setHaveAccount(false)}>Register</span>
               </div>
             </form>
+
           </animated.div>
       )}
     </>
