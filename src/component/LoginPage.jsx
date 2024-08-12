@@ -123,7 +123,7 @@ export default function LoginPage() {
               <span className='text-[12px] text-red-500'>{errors?.email?.message}</span>
               <input {...register("pass", {
                 required: "Password is required.",
-              })} type="password" onClick={handleSubmit(handleLogin)} placeholder='Password' className=' mt-5 h-[40px] rounded-md md:pl-4 md:pr-4 pl-4 text-[20px] outline-none focus:border-b-violet-600 border-2 transition-[0.2s]' />
+              })} type="password" placeholder='Password' className=' mt-5 h-[40px] rounded-md md:pl-4 md:pr-4 pl-4 text-[20px] outline-none focus:border-b-violet-600 border-2 transition-[0.2s]' />
               <span className='text-[12px] text-red-500'>{errors?.pass?.message}</span>
               <button type='submit' className=' mt-6 h-[40px] w-[100px] rounded-lg bg-violet-600 text-white hover:scale-105 active:scale-95 transition-[0.2s]'>Login</button>
               <div className='mt-6'>
