@@ -86,6 +86,7 @@ export default function LoginPage() {
     <>
       {/* <span onClick={listSessions} className=' cursor-pointer'>list</span> */}
       {/* <button onClick={handleLogout}>logout</button> */}
+      {showLoginError ? <ErrorCard errorMessage="Please check email id and password."/> : null}
       {transition((style, item) =>
         !item ? <animated.div style={style} className=' md:w-[500px] w-[360px] h-[400px] flex flex-col items-center absolute justify-center -translate-x-1/2 -translate-y-1/2 left-1/2 top-1/2 bg-slate-200 rounded-lg shadow-[0_0_10px_0px_gray]'>
           <h1 className='text-[30px] mt6'>Register</h1>
@@ -114,7 +115,6 @@ export default function LoginPage() {
         </animated.div> :
           <animated.div style={style} className=' md:w-[500px] w-[360px] h-[400px] flex flex-col items-center absolute -translate-x-1/2 -translate-y-1/2 left-1/2 top-1/2 bg-slate-200 rounded-lg shadow-[0_0_10px_0px_gray]'>
             <h1 className='text-[30px] mt-6'>Login</h1>
-              {showLoginError ? <ErrorCard errorMessage="Please check email id and password."/> : null}
             <form onSubmit={handleSubmit(handleLogin)} className='flex flex-col items-center'>
               <input {...register("email", {
                 required: "Email is required.",
@@ -130,9 +130,9 @@ export default function LoginPage() {
                 <span className=''>Don't have an account?</span> <span className=' cursor-pointer text-violet-800' onClick={() => setHaveAccount(false)}>Register</span>
               </div>
             </form>
-
           </animated.div>
       )}
+      
     </>
   )
 }
