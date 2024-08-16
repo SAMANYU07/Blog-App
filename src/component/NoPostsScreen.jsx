@@ -9,6 +9,7 @@ export default function NoPostsScreen({
   logInToView = false,
   noMyPosts = false,
   noFavoritesPosts = false,
+  noResults = false,
 }) {
   const [message, setMessage] = useState(() => {
     switch (true) {
@@ -18,6 +19,8 @@ export default function NoPostsScreen({
         return "Your saved posts will appear here";
       case noMyPosts:
         return "Your posts will appear here";
+      case noResults:
+        return "No Results";
       default:
         return "Login to view posts";
     }
@@ -36,7 +39,7 @@ export default function NoPostsScreen({
         <img src={dogImg} alt="" className='h-96' />
         <span> {message} </span>
         <button onClick={handleRedirecttoLogin}
-          className={`mt-2 h-10 w-24 text-violet-600 border-2 border-violet-600 rounded-lg loginbtn active:scale-90 transition-[0.2s] outline-none ${guestUser ? "" : "hidden"}`}
+          className={`mt-2 h-10 w-24 text-violet-600 border-2 border-violet-600 rounded-lg loginbtn active:scale-90 transition-[0.2s] outline-none ${guestUser && !noResults ? "" : "hidden"}`}
         >Login</button>
       </div>
     </>
