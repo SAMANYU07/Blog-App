@@ -2,10 +2,15 @@ import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux';
 import blogService from '../appwrite/PostConfig';
 import BlogCard1 from './BlogCard1';
+import { useTrail, animated } from 'react-spring';
 
 export default function MyPostsPage() {
-  const [myBlogs, setMyBlogs] = useState(null);
+  const [myBlogs, setMyBlogs] = useState([]);
   const userID = useSelector(state => state.userID);
+  let blogsTrail = useTrail(myBlogs?.length, {
+    from: {opacity: 0},
+    to: {opacity: 1},
+  });
   useEffect(() => {
     blogService.getAllBlogs()
     .then(data => {
@@ -20,10 +25,17 @@ export default function MyPostsPage() {
       {/* <div className='flex gap-x-8 gap-y-10 mt-4 md:flex-row md:flex-wrap flex-col'> */}
       <div className='flex flex-col gap-y-10 mt-4 md:flex-row md:flex-wrap md:gap-x-8 justify-center'>
         {
+          blogsTrail.map((style, index) =>
+          <animated.div style={style}>
+            <BlogCard1 blog={myBlogs[index]}/>
+          </animated.div>
+          )
+        }
+        {/* {
           myBlogs?.reverse().map(blog => {
             return <BlogCard1 blog={blog}/>
           })
-        }
+        } */}
       </div>
     </div>
     </>

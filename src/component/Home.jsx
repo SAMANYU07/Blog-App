@@ -5,7 +5,7 @@ import blogService from '../appwrite/PostConfig';
 import BlogCard1 from './BlogCard1';
 import LoadingScreen from './LoadingScreen';
 import { toggleLoading } from '../features/authSlice';
-import { useTransition, animated } from 'react-spring';
+import { useTransition, animated, useTrail } from 'react-spring';
 import { useLocation } from 'react-router-dom';
 import { MdArrowLeft, MdArrowRight } from "react-icons/md";
 
@@ -22,6 +22,16 @@ export default function Home() {
   const [totalPostPages, setTotalPostPages] = useState(0);
   const [postPage, setPostPage] = useState(1);
   // const postPa
+  const blogCardTrail = useTrail(latestPosts.length, {
+    from: {opacity: 0},
+    to: {opacity: 1},
+    config: {tension: 200, friction: 20}
+  });
+  const taggedCardTransition = useTrail(taggedPosts.length, {
+    from: {opacity: 0},
+    to: {opacity: 1},
+    config: {tension: 200, friction: 20}
+  })
   const loadingTransition = useTransition(loading, {
     // config: {duration: 100},
     from: { opacity: 0 },
@@ -142,19 +152,35 @@ export default function Home() {
             tag !== null ?
               <div className='flex flex-col gap-y-10 mt-4 md:flex-row md:flex-wrap md:gap-x-8 justify-center'>
                 {
+                  taggedCardTransition.map((style, index) =>
+                  <animated.div style={style} key={index}>
+                    <BlogCard1 blog={taggedPosts[index]}/>
+                  </animated.div>
+                  )
+                }
+                {/* {
                   taggedPosts?.map(blog => {
-                    if (blog?.tags.includes(tag))
                       return <BlogCard1 key={blog?.$id} blog={blog} />
                   })
-                }
+                } */}
               </div>
               :
               <div className='flex flex-col gap-y-10 mt-4 md:flex-row md:flex-wrap md:gap-x-8 justify-center'>
                 {
+                  blogCardTrail.map((style, index) => {
+                    return (
+                      <animated.div style={style} key={index}>
+                        <BlogCard1 blog={latestPosts[index]}/>
+                      </animated.div>
+                    )
+                  }
+                  )
+                }
+                {/* {
                   latestPosts?.map(blog => {
                     return <BlogCard1 key={blog?.$id} blog={blog} />
                   })
-                }
+                } */}
               </div>
           }
           <div className='flex items-center justify-center mt-8'>

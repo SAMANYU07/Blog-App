@@ -4,6 +4,7 @@ import blogService from '../appwrite/PostConfig';
 import BlogCard1 from './BlogCard1';
 import { toggleLoading } from '../features/authSlice';
 import LoadingScreen from './LoadingScreen';
+import { useTrail, animated } from 'react-spring';
 
 export default function FavoritesPage() {
   const [favBlogs, setFavBlogs] = useState(null);
@@ -11,6 +12,10 @@ export default function FavoritesPage() {
   const loading = useSelector(state => state.loading);
   const userID = useSelector(state => state.userID);
   const dispatch = useDispatch();
+  var blogTrail = useTrail(Blogs.length, {
+    from: {opacity: 0},
+    to: {opacity: 1},
+  });
   useEffect(() => {
     dispatch(toggleLoading(true));
     const fetchfav = async () => {
@@ -48,11 +53,18 @@ export default function FavoritesPage() {
       {/* <div className='flex gap-x-8 gap-y-10 mt-4 md:flex-row md:flex-wrap flex-col'> */}
       <div className='flex flex-col gap-y-10 mt-4 md:flex-row md:flex-wrap md:gap-x-8 justify-center'>
     {loading ? <LoadingScreen lheight='h-full' lwidth='w-full'/> :null}
-        {
+    {
+      blogTrail.map((style, index) =>
+      <animated.div style={style}  key={index}>
+        <BlogCard1 blog={Blogs[index]} delblog={(blogid => remblog(blogid))}/>
+      </animated.div>
+      )
+    }
+        {/* {
           Blogs?.map(blog => {
               return <BlogCard1 key={blog.$id} blog={blog} delblog={(blogid => remblog(blogid))} />
           })
-        }
+        } */}
       </div>
     </div>
     </>
