@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { useSelector, useDispatch } from "react-redux";
 import authService from '../appwrite/auth';
 import LoadingScreen from './LoadingScreen';
-import { toggleLoading, toggleUserLoggedIn, updateUserDetails } from '../features/authSlice';
+import { toggleGuestUser, toggleLoading, toggleUserLoggedIn, updateUserDetails } from '../features/authSlice';
 import { useTransition, animated } from 'react-spring';
 import { useForm } from 'react-hook-form';
 import ErrorCard from './ErrorCard';
@@ -28,6 +28,12 @@ export default function LoginPage() {
       })
   }
 
+  const handleGuestUserLogin = async () => {
+    dispatch(toggleLoading(true));
+    dispatch(toggleGuestUser(true));
+    dispatch(toggleUserLoggedIn(true));
+  }
+
   const handleLogin = async (fdata) => {
     dispatch(toggleLoading(true));
     // await authService.loginAccount({ email, pass })
@@ -36,6 +42,7 @@ export default function LoginPage() {
         if (data !== -1) {
           console.log("Login Data: ", data);
           dispatch(toggleUserLoggedIn(true));
+          dispatch(toggleGuestUser(false));
           setHaveAccount(true);
           getSession();
           // authService.activeUserSession()
@@ -107,10 +114,16 @@ export default function LoginPage() {
             })} type="password" placeholder='Password' className=' mt-5 h-[40px] rounded-md md:pl-4 md:pr-4 pl-4 text-[20px] outline-none focus:border-b-violet-600 border-2 transition-[0.2s]' />
             <span className='text-[12px] text-red-500'>{errors?.pass?.message}</span>
             {/* <button className=' mt-6 h-[40px] w-[100px] rounded-lg bg-violet-600 text-white hover:scale-105 active:scale-95 transition-[0.2s]' onClick={handleRegister}>Register</button> */}
-            <button type='submit' className=' mt-6 h-[40px] w-[100px] rounded-lg bg-violet-600 text-white hover:scale-105 active:scale-95 transition-[0.2s]'>Register</button>
+            <div className='flex items-center justify-center mt-6 gap-x-8'>
+            <button type='submit' className=' mt6 h-[40px] w-[100px] rounded-lg bg-violet-600 text-white hover:scale-105 active:scale-95 transition-[0.2s]'>Register</button>
+            <button onClick={handleGuestUserLogin} className='bg-gray-500 h-[40px] w[100px] pl-2 pr-2 rounded-lg text-white hover:scale-105 active:scale-95 transition-[0.2s]'>Login as Guest User</button>
+            </div>
             <div className='mt-6'>
               <span className=''>Don't have an account?</span> <span className=' cursor-pointer text-violet-800' onClick={() => setHaveAccount(true)}>Login</span>
             </div>
+            {/* <div>
+              <span onClick={handleGuestUserLogin} className='text-violet-600 cursor-pointer'>Login as Guest User</span>
+            </div> */}
           </form>
         </animated.div> :
           <animated.div style={style} className=' md:w-[500px] w-[360px] h-[400px] flex flex-col items-center absolute -translate-x-1/2 -translate-y-1/2 left-1/2 top-1/2 bg-slate-200 rounded-lg shadow-[0_0_10px_0px_gray]'>

@@ -125,3 +125,24 @@
 .navLink:hover::after {
   width: 100%;
 }
+.loginbtn {
+  position: relative;
+}
+.loginbtn:hover {
+  color: white;
+  z-index: 1;
+}
+.loginbtn::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 100%;
+  background-color: rgb(124 58 237);
+  transition: 0.2s;
+  z-index: -1;
+}
+.loginbtn:hover::after {
+  width: 100%;
+}

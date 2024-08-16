@@ -13,6 +13,7 @@ import { ID } from 'appwrite';
 import CommentSection from './CommentSection';
 import BlogCard2 from './BlogCard2';
 import BlogCard1 from './BlogCard1';
+import { toggleGuestUser, toggleUserLoggedIn } from '../features/authSlice';
 
 export default function BlogPage() {
   const { blog_id } = useParams();
@@ -29,6 +30,7 @@ export default function BlogPage() {
   const userName = useSelector(state => state.userName);
   const loading = useSelector(state => state.loading);
   const commentsArr = useSelector(state => state.commentsArr);
+  const guestUser = useSelector(state => state.guestUser);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const transition = useTransition(loading, {
@@ -136,6 +138,11 @@ export default function BlogPage() {
 
     }, 400)
   }
+  const handleRedirecttoLogin = () => {
+    dispatch(toggleUserLoggedIn(false));
+    dispatch(toggleGuestUser(false));
+    navigate("/");
+  }
   if (loading)
     return <LoadingScreen />
   return (
@@ -160,8 +167,13 @@ export default function BlogPage() {
               </animated.div>
               <animated.div style={style} className={`md:w-[1000px] w-full ${searchResults?.length > 0 ? "md:ml-24" : ""} md:mt-20 mt-[60px] md:rounded-2xl bg-white md:mb-4 shadow-[0_0_10px_0_gray] flex flex-col items-center`}>
                 <span className='font-bold text-[30px]'>Comments</span>
-                <textarea value={commentV} onChange={event => setCommentV(event.target.value)} type="text" className='w-11/12 m-8 mb-2 mt-2 p-1 bg-[#e9e9e9] outline-none focus:border-b-violet-600 border-2 transition-[0.2s]' placeholder='Your comment...' />
-                <button onClick={handleComment} className='cbtn md:w-[100px] w-1/4 outline-none hover:scale-105 active:scale-90 transition-[0.2s] h-[40px] ml-auto md:mr-10 mr-4'>Post</button> <hr className='h-[6px] w-11/12 mt-4 bg-[#e9e9e9]' />
+                <textarea value={commentV} onChange={event => setCommentV(event.target.value)} type="text" className='w-11/12 m-8 mb-2 mt-2 p-1 bg-[#e9e9e9] outline-none focus:border-b-violet-600 border-2 transition-[0.2s]' placeholder={`${guestUser ? "Login to comment..." : "`Your comment...`"}`} disabled={guestUser} />
+                {guestUser ? 
+                <button onClick={handleRedirecttoLogin} className='loginbtn md:w-[100px] w-1/4 outline-none hover:scale-105 active:scale-90 transition-[0.2s] h-[40px] ml-auto md:mr-10 mr-4 border-2 border-violet-600 rounded-lg text-violet-600'>Login</button>
+                :
+                <button onClick={handleComment} className='cbtn md:w-[100px] w-1/4 outline-none hover:scale-105 active:scale-90 transition-[0.2s] h-[40px] ml-auto md:mr-10 mr-4'>Post</button>
+                }
+                <hr className='h-[6px] w-11/12 mt-4 bg-[#e9e9e9]' />
                 <div className=' md:w-[920px] w-11/12 ml-20 mr-20 mb-4 flex flex-col items-start'>
                   <CommentSection />
                   {/* {
@@ -181,7 +193,7 @@ export default function BlogPage() {
         {searchResults?.length > 0 ?
           <div className='md:fixed top-0 right-0 md:mt-32 mt-10 md:w-[20%]'>
             <span className='font-bold text-[20px]'>Similar Blogs</span>
-            <div className='md:flex hidden flex-col flex-wrap gap-x-10 overflow-y-auto overflow-x-hidden gap-y-2'>
+            <div className='xl:flex hidden flex-col flex-wrap gap-x-10 overflow-y-auto overflow-x-hidden gap-y-2'>
               {
                 searchResults?.map(blog1 => {
                   return <BlogCard2 key={blog1.$id} blog={blog1} />

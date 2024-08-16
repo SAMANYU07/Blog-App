@@ -14,6 +14,8 @@ const initialState = {
   loading: false,
   commentsArr: [],
   date: tdate,
+  guestUser: false,
+  clearData: false,
 };
 
 export const authSlice = createSlice({
@@ -25,6 +27,12 @@ export const authSlice = createSlice({
     },
     toggleUserLoggedIn: (state, action) => {
       state.userLoggedIn = action.payload;
+    },
+    toggleGuestUser: (state, action) => {
+      state.guestUser = action.payload;
+    },
+    toggleClearData: (state, action) => {
+      state.clearData = action.payload;
     },
     updateUserDetails: (state, action) => {
       state.userID = action.payload.id;
@@ -47,5 +55,5 @@ export const authSlice = createSlice({
   }
 });
 
-export const { toggleLoading, toggleUserLoggedIn, updateUserDetails, updatecommentsArr, addcommentsArr } = authSlice.actions;
+export const { toggleLoading, toggleUserLoggedIn, toggleGuestUser, toggleClearData, updateUserDetails, updatecommentsArr, addcommentsArr } = authSlice.actions;
 export default authSlice.reducer;

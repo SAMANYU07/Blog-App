@@ -13,6 +13,7 @@ export default function BlogCard1({ blog, delblog }) {
   const [favLoading, setFavLoading] = useState(false);
   const [hovering, setHovering] = useState(false);
   const userid = useSelector(state => state.userID);
+  const guestUser = useSelector(state => state.guestUser);
   const navigate = useNavigate();
   const favTransition = useTransition(hovering, {
     from: { opacity: 0 },
@@ -65,33 +66,36 @@ export default function BlogCard1({ blog, delblog }) {
   useEffect(() => {
     blogService.getFilePreview(blog?.fImage)
       .then(data => setImgFile(data));
-    const fetchFav = async () => {
-      setFavLoading(true);
-      await blogService.getAllFavorites()
-        .then(data => {
-          let f = false;
-          data.documents?.map(fav => {
-            if (fav?.userid === userid) {
-              fav?.fBlogs?.map(fElem => {
-                if (fElem === blog.$id)
+      if (!guestUser) {
+
+        const fetchFav = async () => {
+          setFavLoading(true);
+          await blogService.getAllFavorites()
+          .then(data => {
+            let f = false;
+            data.documents?.map(fav => {
+              if (fav?.userid === userid) {
+                fav?.fBlogs?.map(fElem => {
+                  if (fElem === blog.$id)
                   setIsFav(true);
               })
             }
           })
         })
-      setFavLoading(false);
+        setFavLoading(false);
+      }
+      fetchFav();
     }
-    fetchFav();
-  }, [])
+    }, [])
   return (
     <>
-      <div className='w-[340px] h-[410px] rounded-lg bg-white pb-10 hover:shadow-[0_0_10px_gray] hover:scale-105 transition-[0.2s]'
+      <div className='w-[340px] h-[410px] rounded-lg bg-white pb-10 hover:shadow-[0_0_10px_gray] transition-[0.2s]'
         onMouseEnter={() => setHovering(true)}
         onMouseLeave={() => setHovering(false)}
       >
         {favLoading && hovering ? <span className='absolute ml-2 mt-2'><LoadingScreen lheight='h-[20px]' lwidth='w-[20px]' aheight='h-[20px]' awidth='w-[20px]' /></span> :
           <>
-            {favTransition((style, hvr) =>
+            {!guestUser && favTransition((style, hvr) =>
               hvr ?
                 <animated.div style={style}>
                   <IconContext.Provider value={isFav ? { color: 'gold', size: '20px' } : { color: 'rgb(51 65 85)', size: '20px' }}>

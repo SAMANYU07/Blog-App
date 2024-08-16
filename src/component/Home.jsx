@@ -4,7 +4,7 @@ import LoginPage from "./LoginPage";
 import blogService from '../appwrite/PostConfig';
 import BlogCard1 from './BlogCard1';
 import LoadingScreen from './LoadingScreen';
-import { toggleLoading } from '../features/authSlice';
+import { toggleClearData, toggleLoading } from '../features/authSlice';
 import { useTransition, animated, useTrail } from 'react-spring';
 import { useLocation } from 'react-router-dom';
 import { MdArrowLeft, MdArrowRight } from "react-icons/md";
@@ -14,7 +14,9 @@ export default function Home() {
   const state = location.state && typeof (location.state) === "string" ? JSON.parse(location.state) : location.state;
   const { tag, searchQuery } = state || { tag: null, searchQuery: null };
   const userLoggedIn = useSelector(state => state.userLoggedIn);
+  const guestUser = useSelector(state => state.guestUser);
   const loading = useSelector(state => state.loading);
+  const clearData = useSelector(state => state.clearData);
   const [latestPosts, setLatestPosts] = useState([]);
   const [totalPosts, setTotalPosts] = useState(0);
   const [taggedPosts, setTaggedPosts] = useState([]);
@@ -40,11 +42,13 @@ export default function Home() {
   });
   const dispatch = useDispatch();
   useEffect(() => {
-    if (tag !== null)
-      console.log("tag: ", tag);
-  }, [])
+    if (clearData) {
+      setLatestPosts([]);
+      dispatch(toggleClearData(false));
+    }
+  }, [clearData])
   useEffect(() => {
-    if (userLoggedIn) {
+    // if (userLoggedIn) {
       if (!loading)
         dispatch(toggleLoading(true));
       setLatestPosts([]);
@@ -86,11 +90,11 @@ export default function Home() {
         setTotalPostPages(parseInt(totalPosts / 10) + 1);
       // console.log("TotalPostPages: ", data.documents.reverse());
       dispatch(toggleLoading(false));
-    }
+    // }
   }, [userLoggedIn, tag, searchQuery]);
   useEffect(() => {
     if (postPage !== "" && postPage !== " ") {
-
+      setLatestPosts([]);
       blogService.getAllBlogs()
       .then(data => {
         // if (postPage !== 1)
@@ -119,19 +123,21 @@ export default function Home() {
   }
   // if (loading)
   // return <LoadingScreen/>
-  if (!userLoggedIn)
+  if (!userLoggedIn && !guestUser)
     return <LoginPage />
+  if (loading)
+    return <LoadingScreen/>
   // latestPosts?.map(blog => console.log(blog));
   return (
     <>
-      {loadingTransition((style, showLoading) =>
+      {/* {loadingTransition((style, showLoading) =>
         showLoading ?
           <animated.div style={style}>
             <LoadingScreen />
           </animated.div>
           :
           null
-      )}
+      )} */}
       {/* {userLoggedIn ? null : <LoginPage/>} */}
       <div className={` mt-20 ${loading ? "hidden" : "block"}`}>
         <div className=' md:ml-10 md:mr-6 md:w-auto md:block flex flex-col items-center mb-10'>
