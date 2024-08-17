@@ -5,14 +5,14 @@ import Button from './Button';
 import { MdSearch } from "react-icons/md";
 import { AiOutlineMenu } from "react-icons/ai";
 import { Link, NavLink, useNavigate } from 'react-router-dom';
-import { toggleClearData, toggleGuestUser, toggleLoading, toggleUserLoggedIn, updateUserDetails } from '../features/authSlice';
+import { toggleClearData, toggleGuestUser, toggleLoading, toggleSearching, toggleUserLoggedIn, updateUserDetails } from '../features/authSlice';
 import { useTransition, animated } from 'react-spring';
-// https://dribbble.com/tags/mobile-nav
 
 export default function Navbar() {
   const userName = useSelector(state => state.userName);
   const userLoggedIn = useSelector(state => state.userLoggedIn);
   const guestUser = useSelector(state => state.guestUser);
+  const searchingR = useSelector(state => state.searching);
   const [creatingBlog, setCreatingBlog] = useState(false);
   const [showNavbar, setShowNavbar] = useState(false);
   const [searching, setSearching] = useState(true);
@@ -57,6 +57,7 @@ export default function Navbar() {
     navigate("/");
   }
   const handleSearch = () => {
+    dispatch(toggleSearching(true));
     const serializedState = JSON.stringify({
       searchQuery: searchPost,
       tag: null,
@@ -80,7 +81,7 @@ export default function Navbar() {
     <>
     {pcNavbarTransition((style, show) =>
     show ?
-      <animated.div style={style} className=' h-[60px] bg-slate-200 items-center fixed md:flex hidden top-0 w-full shadow-[0_0_10px_0_gray] z-50 gap-x-8 navbar'>
+      <animated.div style={style} className={` h-[60px] bg-slate-200 items-center fixed md:flex hidden top-0 w-full shadow-[0_0_10px_0_gray] z-50 gap-x-8 navbar ${searchingR ? "navbar2" : ""}`}>
         <div className='flex items-center justify-center'>
           <span className=' mt-1 inline-block ml-1 font-bold text-[20px] cursor-pointer md:hidden'> <AiOutlineMenu /> </span>
           <span className=' mt-1 inline-block ml-1 font-bold text-[20px]'> {guestUser ? "Guest" : userName} </span>

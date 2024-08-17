@@ -16,6 +16,7 @@ const initialState = {
   date: tdate,
   guestUser: false,
   clearData: false,
+  searching: false,
 };
 
 export const authSlice = createSlice({
@@ -30,6 +31,9 @@ export const authSlice = createSlice({
     },
     toggleGuestUser: (state, action) => {
       state.guestUser = action.payload;
+    },
+    toggleSearching: (state, action) => {
+      state.searching = action.payload;
     },
     toggleClearData: (state, action) => {
       state.clearData = action.payload;
@@ -55,5 +59,5 @@ export const authSlice = createSlice({
   }
 });
 
-export const { toggleLoading, toggleUserLoggedIn, toggleGuestUser, toggleClearData, updateUserDetails, updatecommentsArr, addcommentsArr } = authSlice.actions;
+export const { toggleLoading, toggleUserLoggedIn, toggleGuestUser, toggleSearching, toggleClearData, updateUserDetails, updatecommentsArr, addcommentsArr } = authSlice.actions;
 export default authSlice.reducer;

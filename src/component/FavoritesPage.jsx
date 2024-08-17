@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import blogService from '../appwrite/PostConfig';
 import BlogCard1 from './BlogCard1';
-import { toggleLoading } from '../features/authSlice';
+import { toggleLoading, toggleSearching } from '../features/authSlice';
 import LoadingScreen from './LoadingScreen';
 import { useTrail, animated } from 'react-spring';
 import NoPostsScreen from './NoPostsScreen';
@@ -22,6 +22,7 @@ export default function FavoritesPage() {
   if (guestUser)
     return <NoPostsScreen/>
   useEffect(() => {
+    dispatch(toggleSearching(true));
     dispatch(toggleLoading(true));
     const fetchfav = async () => {
       await blogService.getAllFavorites()
@@ -44,6 +45,7 @@ export default function FavoritesPage() {
       fetchblog(blogid);
     })
     dispatch(toggleLoading(false));
+    dispatch(toggleSearching(false));
   }, [userID, favBlogs])
   const remblog = (blogid) => {
     const temp = Blogs.filter(blog => blog.$id !== blogid);

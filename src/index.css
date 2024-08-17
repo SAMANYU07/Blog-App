@@ -146,3 +146,26 @@
 .loginbtn:hover::after {
   width: 100%;
 }
+.navbar2::after, .navbar2::before {
+  content: '';
+  position: absolute;
+  width: 40%;
+  height: 10%;
+  /* background-color: aqua; */
+  /* background-image: conic-gradient(from 0deg, transparent 70%, rgb(124, 58, 237)); */
+  background-image: linear-gradient(to right, transparent, rgb(124, 58, 237), transparent);
+  top: 100%;
+  left: 0%;
+  translate: -50%, -50%;
+  z-index: -1;
+  animation: loading_animation 1s linear infinite;
+}
+
+@keyframes loading_animation {
+  0% {
+    transform: translate(-100%, 0%);
+  }
+  100% {
+    transform: translate(240%, 0%);
+  }
+}

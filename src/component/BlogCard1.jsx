@@ -121,7 +121,7 @@ export default function BlogCard1({ blog, delblog }) {
           <div className='flex gap-x-2 w-full flex-wrap gap-y-1'>
             {
               blog?.tags?.map(tag => {
-                return (<span onClick={() => handleSearchTag(tag)} 
+                return (<span key={tag} onClick={() => handleSearchTag(tag)} 
                 className='border-2 border-gray-700 text-gray-700 rounded-md pl-1 pr-1 text-[13px] cursor-pointer hover:bg-violet-600 hover:text-white transition-[0.2s]'
                 >{tag}</span>)
               })

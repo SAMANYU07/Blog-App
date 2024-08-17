@@ -4,7 +4,7 @@ import LoginPage from "./LoginPage";
 import blogService from '../appwrite/PostConfig';
 import BlogCard1 from './BlogCard1';
 import LoadingScreen from './LoadingScreen';
-import { toggleClearData, toggleLoading } from '../features/authSlice';
+import { toggleClearData, toggleLoading, toggleSearching } from '../features/authSlice';
 import { useTransition, animated, useTrail } from 'react-spring';
 import { useLocation } from 'react-router-dom';
 import { MdArrowLeft, MdArrowRight } from "react-icons/md";
@@ -18,6 +18,7 @@ export default function Home() {
   const guestUser = useSelector(state => state.guestUser);
   const loading = useSelector(state => state.loading);
   const clearData = useSelector(state => state.clearData);
+  const searching = useSelector(state => state.searching);
   const [latestPosts, setLatestPosts] = useState([]);
   const [totalPosts, setTotalPosts] = useState(0);
   const [taggedPosts, setTaggedPosts] = useState([]);
@@ -49,6 +50,7 @@ export default function Home() {
     }
   }, [clearData])
   useEffect(() => {
+    dispatch(toggleSearching(true));
     // if (userLoggedIn) {
     if (!loading)
       dispatch(toggleLoading(true));
@@ -75,24 +77,26 @@ export default function Home() {
         })
     }
     else if (searchQuery !== null && searchQuery !== undefined) {
-      setSearchedPosts([]);
-      blogService.getAllBlogs()
-        .then(data => {
-          data.documents.reverse().map(blog => {
-            if (blog?.title.toLowerCase().includes(searchQuery.toLowerCase())) {
-              setSearchedPosts(p => [...p, blog]);
-              setTotalPosts(searchedPosts.length);
-            }
+      const searchForPosts = async () => {
+        setSearchedPosts([]);
+        await blogService.getAllBlogs()
+          .then(data => {
+            data.documents.reverse().map(blog => {
+              if (blog?.title.toLowerCase().includes(searchQuery.toLowerCase())) {
+                setSearchedPosts(p => [...p, blog]);
+                setTotalPosts(searchedPosts.length);
+              }
+            })
           })
-          if (searchedPosts.length === 0)
-            setSearchedPosts(p => [...p, "null"]);
-        })
+      }
+      searchForPosts();
     }
     if (totalPosts % 10 === 0)
       setTotalPostPages(totalPosts / 10);
     else
       setTotalPostPages(parseInt(totalPosts / 10) + 1);
     // console.log("TotalPostPages: ", data.documents.reverse());
+    dispatch(toggleSearching(false));
     dispatch(toggleLoading(false));
     // }
   }, [userLoggedIn, tag, searchQuery]);
@@ -148,7 +152,8 @@ export default function Home() {
           {loading && (searchQuery !== null && searchQuery !== undefined) ? <span className='font-bold text-[20px]'>Search Results:</span> :
             <span className='font-bold text-[20px]'>{tag !== null ? "Blogs tagged " + tag : "Latest Blogs"}</span>
           }
-          {latestPosts.length === 0 && searchedPosts.length === 0 && taggedPosts.length === 0 ? <LoadingScreen lwidth='w-full' lheight='h-full' /> : null}
+          {latestPosts.length === 0 && searchedPosts.length === 0 && taggedPosts.length === 0 ? () => dispatch(toggleSearching(true)) : () => dispatch(toggleSearching(false))}
+          {/* {latestPosts.length === 0 && searchedPosts.length === 0 && taggedPosts.length === 0 && !searching ? <LoadingScreen lwidth='w-full' lheight='h-full' /> : null} */}
           {searchQuery !== null && searchQuery !== undefined ?
             <SearchedPostSection searchedPosts={searchedPosts} />
             // <div className='flex flex-col gap-y-10 mt-4 md:flex-row md:flex-wrap md:gap-x-8 justify-center'>
