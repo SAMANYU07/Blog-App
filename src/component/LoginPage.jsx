@@ -32,6 +32,7 @@ export default function LoginPage() {
     dispatch(toggleLoading(true));
     dispatch(toggleGuestUser(true));
     dispatch(toggleUserLoggedIn(true));
+    dispatch(updateUserDetails({id: "0", name: "guest"}));
   }
 
   const handleLogin = async (fdata) => {

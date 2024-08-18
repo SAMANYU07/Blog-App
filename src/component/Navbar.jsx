@@ -11,6 +11,7 @@ import { useTransition, animated } from 'react-spring';
 export default function Navbar() {
   const userName = useSelector(state => state.userName);
   const userLoggedIn = useSelector(state => state.userLoggedIn);
+  const userID = useSelector(state => state.userID);
   const guestUser = useSelector(state => state.guestUser);
   const searchingR = useSelector(state => state.searching);
   const [creatingBlog, setCreatingBlog] = useState(false);
@@ -87,8 +88,8 @@ export default function Navbar() {
           <span className=' mt-1 inline-block ml-1 font-bold text-[20px]'> {guestUser ? "Guest" : userName} </span>
         </div>
         <span className=' ml-auto mr8 cursor-pointer transition-[0.2s] navLink'><NavLink to='' className={({ isActive }) => isActive ? ` text-violet-600` : " transition-[0.2s]"}>Home</NavLink></span>
-        <span className=' mr8 cursor-pointer transition-[0.2s] navLink'><NavLink to="/myposts" className={({ isActive }) => isActive ? ` text-violet-600` : " transition-[0.2s]"}>My Posts</NavLink></span>
-        <span className=' mr8 cursor-pointer transition-[0.2s] navLink'><NavLink to={!window.location.href.includes("favorites") ? "/favorites" : null} className={({ isActive }) => isActive ? ` text-violet-600` : " transition-[0.2s]"}>Favorites</NavLink></span>
+        <span className=' mr8 cursor-pointer transition-[0.2s] navLink'><NavLink to={`/myposts/` + userID} className={({ isActive }) => isActive ? ` text-violet-600` : " transition-[0.2s]"}>My Posts</NavLink></span>
+        <span className=' mr8 cursor-pointer transition-[0.2s] navLink'><NavLink to={!window.location.href.includes("favorites") ? `/favorites/${userID}` : null} className={({ isActive }) => isActive ? ` text-violet-600` : " transition-[0.2s]"}>Favorites</NavLink></span>
         <div className='flex'>
           <input value={searchPost} onChange={event => setSearchPost(event.target.value)}
             onKeyDown={(event) => {
@@ -123,7 +124,7 @@ export default function Navbar() {
           null)}
       {pcNavbarTransition((style, show) =>
       show ?
-      <animated.div style={style} className=' h-[60px] bg-slate-200 flex md:hidden items-center fixed top-0 w-full shadow-[0_0_10px_0_gray] z-50 gap-x-8 navbar'>
+      <animated.div style={style} className={` h-[60px] bg-slate-200 flex md:hidden items-center fixed top-0 w-full shadow-[0_0_10px_0_gray] z-50 gap-x-8 navbar ${searchingR ? "navbar2" : ""}`}>
         <div className='flex items-center justify-center'>
           <span className=' mt-1 inline-block ml-1 font-bold text-[20px] cursor-pointer' onClick={() => setShowNavbar(n => !n)}> <AiOutlineMenu /> </span>
           <span className=' mt-1 inline-block ml-1 font-bold text-[20px]'> {guestUser ? "Guest" : userName} </span>
@@ -135,8 +136,8 @@ export default function Navbar() {
                   <span className=' mt-1 inline-block ml-1 font-bold text-[20px]'>{userName}</span>
                 </div>
                 <span className=' mr8 pl-4 cursor-pointer border-2 border-b-gray-300 hover:text-violet-600 transition-[0.2s]'><NavLink onClick={() => setShowNavbar(n => !n)} to='' className={({ isActive }) => isActive ? ` text-violet-600` : " transition-[0.2s]"}>Home</NavLink></span>
-                <span className=' mr8 pl-4 cursor-pointer border-2 border-b-gray-300 hover:text-violet-600 transition-[0.2s]'><NavLink onClick={() => setShowNavbar(n => !n)} to="/myposts" className={({ isActive }) => isActive ? ` text-violet-600` : " transition-[0.2s]"}>My Posts</NavLink></span>
-                <span className=' mr8 pl-4 cursor-pointer border-2 border-b-gray-300 hover:text-violet-600 transition-[0.2s]'><NavLink onClick={() => setShowNavbar(n => !n)} to={!window.location.href.includes("favorites") ? "/favorites" : null} className={({ isActive }) => isActive ? ` text-violet-600` : " transition-[0.2s]"}>Favorites</NavLink></span>
+                <span className=' mr8 pl-4 cursor-pointer border-2 border-b-gray-300 hover:text-violet-600 transition-[0.2s]'><NavLink onClick={() => setShowNavbar(n => !n)} to={`/myposts/` + userID} className={({ isActive }) => isActive ? ` text-violet-600` : " transition-[0.2s]"}>My Posts</NavLink></span>
+                <span className=' mr8 pl-4 cursor-pointer border-2 border-b-gray-300 hover:text-violet-600 transition-[0.2s]'><NavLink onClick={() => setShowNavbar(n => !n)} to={!window.location.href.includes("favorites") ? `/favorites/${userID}` : null} className={({ isActive }) => isActive ? ` text-violet-600` : " transition-[0.2s]"}>Favorites</NavLink></span>
                 <div className='mt-auto mb-[30%] justify-center items-center flex'>
                   <button onClick={() => {
                     setShowNavbar(n => !n);

@@ -3,27 +3,35 @@ import { useDispatch, useSelector } from 'react-redux';
 import blogService from '../appwrite/PostConfig';
 import BlogCard1 from './BlogCard1';
 import { useTrail, animated } from 'react-spring';
-import { toggleGuestUser, toggleUserLoggedIn } from '../features/authSlice';
+import { toggleGuestUser, toggleSearching, toggleUserLoggedIn } from '../features/authSlice';
 import NoPostsScreen from './NoPostsScreen';
+import { useLoaderData } from 'react-router-dom';
+import store from "../Store/store";
 
 export default function MyPostsPage() {
-  const [myBlogs, setMyBlogs] = useState([]);
+  // const [myBlogs, setMyBlogs] = useState([]);
+  const myBlogs= useLoaderData();
   const userID = useSelector(state => state.userID);
   const guestUser = useSelector(state => state.guestUser);
   let blogsTrail = useTrail(myBlogs?.length, {
     from: { opacity: 0 },
     to: { opacity: 1 },
   });
-  if (guestUser)
+  if (guestUser) {
+    store.dispatch(toggleSearching(false));
     return <NoPostsScreen/>
+  }
+    // useEffect(() => {
+    //   if (!guestUser) {
+    //     blogService.getAllBlogs()
+    //     .then(data => {
+    //       let tempBlogs = data.documents.filter(blog => blog.userid === userID)
+    //       setMyBlogs(tempBlogs);
+    //     })
+    //   }
+    // }, [])
     useEffect(() => {
-      if (!guestUser) {
-        blogService.getAllBlogs()
-        .then(data => {
-          let tempBlogs = data.documents.filter(blog => blog.userid === userID)
-          setMyBlogs(tempBlogs);
-        })
-      }
+      store.dispatch(toggleSearching(false));
     }, [])
     if (myBlogs.length === 0)
       return <NoPostsScreen noMyPosts={true}/>
@@ -49,4 +57,20 @@ export default function MyPostsPage() {
         </div>
     </>
   )
+}
+
+export const fetchMyPosts = async ({params}) => {
+  store.dispatch(toggleSearching(true));
+  const {user_id} = params;
+  if (user_id === "0")
+    return [];
+  let tempBlogs =[];
+  await blogService.getAllBlogs()
+  .then(data => {
+    tempBlogs = data.documents?.filter(blog => blog.userid === user_id);
+  })
+  .catch(error => {
+    console.log("MyPosts fetching error: ", error.message);
+  });
+  return tempBlogs;
 }

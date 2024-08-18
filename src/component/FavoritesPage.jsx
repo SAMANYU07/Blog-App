@@ -6,9 +6,12 @@ import { toggleLoading, toggleSearching } from '../features/authSlice';
 import LoadingScreen from './LoadingScreen';
 import { useTrail, animated } from 'react-spring';
 import NoPostsScreen from './NoPostsScreen';
+import { useLoaderData } from 'react-router-dom';
+import store from '../Store/store';
 
 export default function FavoritesPage() {
-  const [favBlogs, setFavBlogs] = useState([]);
+  // const [favBlogs, setFavBlogs] = useState([]);
+  const favBlogs = useLoaderData();
   const [Blogs, setBlogs] = useState([]);
   const [noPosts, setNoPosts] = useState(false);
   const loading = useSelector(state => state.loading);
@@ -19,28 +22,30 @@ export default function FavoritesPage() {
     from: {opacity: 0},
     to: {opacity: 1},
   });
-  if (guestUser)
+  if (guestUser){
+    dispatch(toggleSearching(false));
     return <NoPostsScreen/>
+  }
   useEffect(() => {
     dispatch(toggleSearching(true));
     dispatch(toggleLoading(true));
-    const fetchfav = async () => {
-      await blogService.getAllFavorites()
-      .then(data => {
-        data.documents?.map(fav => {
-          if (fav?.userid === userID) {
-            setFavBlogs(fav?.fBlogs);
-          }
-        })
-      })
-    }
+    // const fetchfav = async () => {
+    //   await blogService.getAllFavorites()
+    //   .then(data => {
+    //     data.documents?.map(fav => {
+    //       if (fav?.userid === userID) {
+    //         setFavBlogs(fav?.fBlogs);
+    //       }
+    //     })
+    //   })
+    // }
     const fetchblog = async (blogid) => {
         await blogService.getBlog(blogid)
         .then(blog => {
           setBlogs(b => [...b, blog]);
       })
     }
-    favBlogs.length === 0 ? fetchfav() : null;
+    // favBlogs.length === 0 ? fetchfav() : null;
     favBlogs?.map(blogid => {
       fetchblog(blogid);
     })
@@ -86,4 +91,23 @@ export default function FavoritesPage() {
     </div>
     </>
   )
+}
+
+export const fetchFavorites = async ({params}) => {
+  store.dispatch(toggleSearching(true));
+  const {user_id} = params;
+  if (user_id === "0")
+    return [];
+  let tempBlogsID = [];
+  await blogService.getAllFavorites()
+  .then(data => {
+    data.documents?.map(fav => {
+      if (fav?.userid === user_id)
+        tempBlogsID = fav?.fBlogs;
+    })
+  })
+  .catch(error => {
+    console.log("Favorites fetching error: ", error.message);
+  });
+  return tempBlogsID;
 }
