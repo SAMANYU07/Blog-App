@@ -8,10 +8,12 @@ import Home from './component/Home';
 import NewBlog from './component/NewBlog';
 import BlogPage from './component/BlogPage';
 // import MyPostsPage from './component/MyPostsPage';
-import FavoritesPage, { fetchFavorites } from './component/FavoritesPage';
+// import FavoritesPage, { fetchFavorites } from './component/FavoritesPage';
 import LoadingScreen from './component/LoadingScreen';
-import { fetchMyPosts } from './component/MyPostsPage';
+import { fetchMyPosts } from './loaders/MyPostsLoader';
+import { fetchFavorites } from './loaders/FavoritesLoader';
 const LazyMyPostsPage = React.lazy(() => import("./component/MyPostsPage"));
+const LazyFavoritesPage = React.lazy(() => import("./component/FavoritesPage"));
 // import './App.css'
 
 const router = createBrowserRouter(
@@ -30,7 +32,7 @@ const router = createBrowserRouter(
         loader={fetchMyPosts}></Route>
       <Route element={
         <React.Suspense fallback={<LoadingScreen lheight='h-full' lwidth='w-full' aheight='h-full' awidth='w-full' />}>
-          <FavoritesPage />
+          <LazyFavoritesPage />
         </React.Suspense>
       }
         path='/favorites/:user_id'
