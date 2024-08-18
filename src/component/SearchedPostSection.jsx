@@ -12,8 +12,8 @@ export default function SearchedPostSection({searchedPosts = []}) {
     return <NoPostsScreen noResults={true}/>
   }
   const cardTrail = useTrail(searchedPosts.length, {
-    from: {opacity: 0},
-    to: {opacity: 1},
+    from: { opacity: 0, transform: "translate(0, -10px)" },
+    to: { opacity: 1, transform: "translate(0, 0px)" },
     config: {tension: 200, friction: 20},
   });
   return (

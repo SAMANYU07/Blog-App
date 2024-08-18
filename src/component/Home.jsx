@@ -27,13 +27,13 @@ export default function Home() {
   const [postPage, setPostPage] = useState(1);
   // const postPa
   const blogCardTrail = useTrail(latestPosts.length, {
-    from: { opacity: 0 },
-    to: { opacity: 1 },
+    from: { opacity: 0, transform: "translate(0, -10px)" },
+    to: { opacity: 1, transform: "translate(0, 0px)" },
     config: { tension: 200, friction: 20 }
   });
   const taggedCardTrail = useTrail(taggedPosts.length, {
-    from: { opacity: 0 },
-    to: { opacity: 1 },
+    from: { opacity: 0, transform: "translate(0, -10px)" },
+    to: { opacity: 1, transform: "translate(0, 0px)" },
     config: { tension: 200, friction: 20 }
   })
   const loadingTransition = useTransition(loading, {
