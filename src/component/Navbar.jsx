@@ -116,7 +116,7 @@ export default function Navbar() {
     )}
       {!guestUser && plusTransition((style, item) =>
         item ?
-          <animated.div style={style} className='fixed right-4 mt-auto bottom-6'>
+          <animated.div style={style} className='fixed z-50 right-4 mt-auto bottom-6'>
             <button onClick={handleNewBlog} className={` w-[40px] h-[40px] text-[26px] bg-violet-600 rounded-full outline-none text-white hover:scale-110 active:scale-90 transition-[0.2s]`}>+</button>
             {/* <Button children="+" className='' rounded='rounded-full'/> */}
           </animated.div>
