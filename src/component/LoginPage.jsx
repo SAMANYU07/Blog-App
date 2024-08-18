@@ -93,7 +93,7 @@ export default function LoginPage() {
   return (
     <>
       {/* <span onClick={listSessions} className=' cursor-pointer'>list</span> */}
-      <button onClick={handleLogout}>logout</button>
+      {/* <button onClick={handleLogout}>logout</button> */}
       {showLoginError ? <ErrorCard errorMessage="Please check email id and password."/> : null}
       {transition((style, item) =>
         !item ? <animated.div style={style} className=' md:w-[500px] w-[360px] h-[400px] flex flex-col items-center absolute justify-center -translate-x-1/2 -translate-y-1/2 left-1/2 top-1/2 bg-slate-200 rounded-lg shadow-[0_0_10px_0px_gray]'>
