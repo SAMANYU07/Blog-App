@@ -163,9 +163,9 @@
 
 @keyframes loading_animation {
   0% {
-    transform: translate(-100%, 0%);
+    transform: translateX(-100%)
   }
   100% {
-    transform: translate(240%, 0%);
+    transform: translateX(240%)
   }
 }
